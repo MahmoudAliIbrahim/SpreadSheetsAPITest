@@ -1,0 +1,51 @@
+package dk.izbrannick.glutter.sheetstest;
+
+/**
+ * Created by luther on 03/11/2016.
+ */
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+
+/**
+ * Created by kstanoev on 1/14/2015.
+ */
+public class MyContactsAdapter extends ArrayAdapter<MyContact> {
+
+    Context context;
+    private ArrayList<MyContact> myContacts;
+
+    public MyContactsAdapter(Context context, int textViewResourceId, ArrayList<MyContact> items) {
+        super(context, textViewResourceId, items);
+        this.context = context;
+        this.myContacts = items;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View v = convertView;
+        if (v == null) {
+            LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            v = vi.inflate(R.layout.my_contact, null);
+        }
+        MyContact o = myContacts.get(position);
+        if (o != null) {
+            TextView name = (TextView) v.findViewById(R.id.name);
+            TextView numberPrimary = (TextView) v.findViewById(R.id.numberPrimary);
+            TextView numberSecondary = (TextView) v.findViewById(R.id.numberSecondary);
+            TextView numberOther = (TextView) v.findViewById(R.id.numberOther);
+
+            name.setText(String.valueOf(o.getName()));
+            numberPrimary.setText(String.valueOf(o.getNumberPrimary()));
+            numberSecondary.setText(String.valueOf(o.getNumberSecondary()));
+            numberOther.setText(String.valueOf(o.getNumberOther()));
+        }
+        return v;
+    }
+}

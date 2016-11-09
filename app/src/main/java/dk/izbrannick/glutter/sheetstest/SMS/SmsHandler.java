@@ -6,10 +6,6 @@ import android.telephony.SmsManager;
 import android.util.Log;
 
 import java.util.ArrayList;
-
-import dk.izbrannick.glutter.sheetstest.MainActivity;
-import dk.izbrannick.glutter.sheetstest.MyContact;
-
 /**
  * Created by u321424 on 07-11-2016.
  */

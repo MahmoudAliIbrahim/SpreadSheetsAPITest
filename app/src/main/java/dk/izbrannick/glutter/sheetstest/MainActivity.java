@@ -16,10 +16,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import dk.izbrannick.glutter.sheetstest.SMS.SmsHandler;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String DEBUG_TAG = "HttpExample";
     ArrayList<MyContact> myContacts = new ArrayList<>();
+    ArrayList<String> myContactsNumbers = new ArrayList<>();
     private ListView listview;
     // teams - private String SpreadSheetURL_ = "https://spreadsheets.google.com/tq?key=15nFv1Ap8NHAwFW0NU6ow9DGLdI4sT4pLiCUfdFmW6XQ";
     private String SpreadSheetURL_ = "https://spreadsheets.google.com/tq?key=1552qHrDx3gS6S2LU8wuhFYZoIZE1oQJ_B18HBqTivEs";
@@ -44,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
             //update repeatably
             //t.start();
         }
+        SmsHandler smsHandler = new SmsHandler(this, myContactsNumbers, "This is a test, lskadja lsk  alskjd las jdlkas jd", "77777777");
+        smsHandler.startSmsTask();
     }
 
     Thread t = new Thread() {
@@ -105,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                 MyContact myContact = new MyContact(name, numberPrimary, numberSecondary, numberOther);
 
                 myContacts.add(myContact);
-
+                myContactsNumbers.add(String.valueOf(myContact.getNumberPrimary()));
             }
 
             final MyContactsAdapter adapter = new MyContactsAdapter(this, R.layout.my_contact, myContacts);

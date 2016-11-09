@@ -47,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
             //update repeatably
             //t.start();
         }
-        SmsHandler smsHandler = new SmsHandler(this, myContactsNumbers, "This is a test, lskadja lsk  alskjd las jdlkas jd", "77777777");
-        smsHandler.startSmsTask();
+        //SmsHandler smsHandler = new SmsHandler(this, myContactsNumbers, "This is a test, lskadja lsk  alskjd las jdlkas jd", "77777777");
+        //smsHandler.startSmsTask();
     }
 
     Thread t = new Thread() {
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                     numberOther = columns.getJSONObject(4).getInt("v");
                 }catch (Exception e){}
 
-                MyContact myContact = new MyContact(name, numberPrimary, numberSecondary, numberOther);
+                MyContact myContact = new MyContact(name, numberPrimary, numberSecondary, numberOther, false);
 
                 myContacts.add(myContact);
                 myContactsNumbers.add(String.valueOf(myContact.getNumberPrimary()));

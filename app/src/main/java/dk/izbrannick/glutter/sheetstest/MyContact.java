@@ -7,14 +7,16 @@ package dk.izbrannick.glutter.sheetstest;
 public class MyContact {
     private String name;
     private int numberPrimary, numberSecondary, numberOther;
+    private boolean isLeader;
 
 
-    public MyContact(String name, int numberPrimary, int numberSecondary, int numberOther) {
+    public MyContact(String name, int numberPrimary, int numberSecondary, int numberOther, boolean isLeader) {
 
         this.setName(name);
         this.setNumberPrimary(numberPrimary);
         this.setNumberSecondary(numberSecondary);
         this.setNumberOther(numberOther);
+        this.setLeaderState(isLeader);
     }
 
     public String getName() {
@@ -47,5 +49,13 @@ public class MyContact {
 
     public void setNumberOther(int numberOther) {
         this.numberOther = numberOther;
+    }
+
+    public boolean isLeader() {
+        return isLeader;
+    }
+
+    public void setLeaderState(boolean leader) {
+        isLeader = leader;
     }
 }

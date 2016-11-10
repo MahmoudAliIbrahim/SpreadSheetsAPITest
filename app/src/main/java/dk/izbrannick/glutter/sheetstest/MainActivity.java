@@ -15,8 +15,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import dk.izbrannick.glutter.sheetstest.SMS.SmsHandler;
-
 import static dk.izbrannick.glutter.sheetstest.Constants.*;
 
 public class MainActivity extends AppCompatActivity {

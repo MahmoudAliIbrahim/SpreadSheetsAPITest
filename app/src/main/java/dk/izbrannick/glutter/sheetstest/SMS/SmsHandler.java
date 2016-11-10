@@ -45,7 +45,7 @@ public class SmsHandler {
             try {
                     for (int i = 0; i < numbers.size(); i++) {
                         Log.d("SEND SMS", "Sending to #" + i + " "+ numbers.get(i));
-                        smsManager.sendMultipartTextMessage(myContactsLeaderNumbers.get(i), null, iFragmentList, null, null);
+                        smsManager.sendMultipartTextMessage(numbers.get(i), null, iFragmentList, null, null);
                     }
             } catch (Exception e) {
                 Thread.interrupted();

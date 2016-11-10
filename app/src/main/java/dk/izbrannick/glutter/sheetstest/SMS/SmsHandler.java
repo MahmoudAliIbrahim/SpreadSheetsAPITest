@@ -6,21 +6,22 @@ import android.telephony.SmsManager;
 import android.util.Log;
 
 import java.util.ArrayList;
+
+import static dk.izbrannick.glutter.sheetstest.Constants.*;
+
 /**
  * Created by u321424 on 07-11-2016.
  */
 
 public class SmsHandler {
 
-    private Context context;
-    private ArrayList<String> currentGroupNumbers = new ArrayList<>();
+    private ArrayList<String> numbers;
     private String message, senderNumber;
     private SmsManager smsManager;
 
-    public SmsHandler(Context context, ArrayList<String> currentGroupNumbers, String message, String senderNumber)
+    public SmsHandler(ArrayList<String> numbers, String message, String senderNumber)
     {
-        this.context = context;
-        this.currentGroupNumbers = currentGroupNumbers;
+        this.numbers = numbers;
         this.message = message;
         this.senderNumber = senderNumber;
         this.smsManager = SmsManager.getDefault();
@@ -42,8 +43,9 @@ public class SmsHandler {
             iFragmentList = smsManager.divideMessage(params[1]);
 
             try {
-                    for (int i = 0; i < currentGroupNumbers.size(); i++) {
-                        smsManager.sendMultipartTextMessage(currentGroupNumbers.get(i), null, iFragmentList, null, null);
+                    for (int i = 0; i < numbers.size(); i++) {
+                        Log.d("SEND SMS", "Sending to #" + i + " "+ numbers.get(i));
+                        smsManager.sendMultipartTextMessage(myContactsLeaderNumbers.get(i), null, iFragmentList, null, null);
                     }
             } catch (Exception e) {
                 Thread.interrupted();

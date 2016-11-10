@@ -41,10 +41,10 @@ public class MyContactsAdapter extends ArrayAdapter<MyContact> {
             TextView numberSecondary = (TextView) v.findViewById(R.id.numberSecondary);
             TextView numberOther = (TextView) v.findViewById(R.id.numberOther);
 
-            name.setText(String.valueOf(o.getName()));
-            numberPrimary.setText(String.valueOf(o.getNumberPrimary()));
-            numberSecondary.setText(String.valueOf(o.getNumberSecondary()));
-            numberOther.setText(String.valueOf(o.getNumberOther()));
+            name.setText(o.getName());
+            numberPrimary.setText(o.getNumberPrimary());
+            numberSecondary.setText(o.getNumberSecondary());
+            numberOther.setText(o.getNumberOther());
         }
         return v;
     }

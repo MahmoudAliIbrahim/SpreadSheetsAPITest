@@ -65,14 +65,8 @@ public class MyBroadcastReceiver extends android.content.BroadcastReceiver {
 
             if (!currMsg.equals(beskedOld)) {
 
-                    if (currMsg.startsWith("Teen")) {
-                        SmsHandler smsHandler = new SmsHandler(myContactsAllNumbers, currMsg, currNr);
+                        SmsHandler smsHandler = new SmsHandler(currMsg, currNr);
                         smsHandler.startSmsTask();
-                    }
-                    if (currMsg.startsWith("Test")) {
-                        SmsHandler smsHandler = new SmsHandler(myContactsLeaderNumbers, currMsg, currNr);
-                        smsHandler.startSmsTask();
-                    }
 
             }
 

@@ -13,4 +13,6 @@ public class Constants {
     public static ArrayList<MyContact> myContacts;
     public static ArrayList<String> myContactsAllNumbers;
     public static ArrayList<String> myContactsLeaderNumbers;
+    public static String groupMessage;
+    public static String groupMessageOld;
 }

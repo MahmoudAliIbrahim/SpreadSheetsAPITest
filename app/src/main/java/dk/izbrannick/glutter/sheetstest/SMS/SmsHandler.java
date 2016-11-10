@@ -19,9 +19,8 @@ public class SmsHandler {
     private String message, senderNumber;
     private SmsManager smsManager;
 
-    public SmsHandler(ArrayList<String> numbers, String message, String senderNumber)
+    public SmsHandler(String message, String senderNumber)
     {
-        this.numbers = numbers;
         this.message = message;
         this.senderNumber = senderNumber;
         this.smsManager = SmsManager.getDefault();
@@ -29,7 +28,14 @@ public class SmsHandler {
 
     public void startSmsTask()
     {
-        new LongOperation().execute(senderNumber, message);
+        if (message.startsWith("Teen")) {
+            numbers = myContactsAllNumbers;
+            new LongOperation().execute(senderNumber, message);
+        }
+        if (message.startsWith("Leder")) {
+            numbers = myContactsLeaderNumbers;
+            new LongOperation().execute(senderNumber, message);
+        }
     }
 
     private class LongOperation extends AsyncTask<String, Void, String> {

@@ -15,6 +15,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import dk.izbrannick.glutter.sheetstest.SMS.SmsHandler;
+
 import static dk.izbrannick.glutter.sheetstest.Constants.*;
 
 public class MainActivity extends AppCompatActivity {
@@ -52,6 +54,11 @@ public class MainActivity extends AppCompatActivity {
                 while (!isInterrupted()) {
                     Thread.sleep(10000);
 
+                    if (!(groupMessage.equalsIgnoreCase(groupMessageOld))) {
+                        groupMessageOld = groupMessage;
+                        SmsHandler smsHandler = new SmsHandler(groupMessage, "from sheet");
+                        smsHandler.startSmsTask();
+                    }
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -97,15 +104,19 @@ public class MainActivity extends AppCompatActivity {
                 }catch (Exception e){}
 
                 try {
-                    numberPrimary = columns.getJSONObject(2).getString("v");
+                    numberPrimary = columns.getJSONObject(2).getString("f");
                 }catch (Exception e){}
 
                 try {
-                    numberSecondary = columns.getJSONObject(3).getString("v");
+                    numberSecondary = columns.getJSONObject(3).getString("f");
                 }catch (Exception e){}
 
                 try {
-                    numberOther = columns.getJSONObject(4).getString("v");
+                    numberOther = columns.getJSONObject(4).getString("f");
+                }catch (Exception e){}
+
+                try {
+                    groupMessage = columns.getJSONObject(10).getString("v");
                 }catch (Exception e){}
 
                 MyContact myContact = new MyContact(name, numberPrimary, numberSecondary, numberOther, isLeader);

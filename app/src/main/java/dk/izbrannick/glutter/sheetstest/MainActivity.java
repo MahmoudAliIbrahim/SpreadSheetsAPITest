@@ -13,6 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
 import dk.izbrannick.glutter.sheetstest.SMS.SmsHandler;
@@ -37,15 +38,22 @@ public class MainActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.SEND_SMS},1);
         if (networkInfo != null && networkInfo.isConnected()) {
 
-            new DownloadWebPageTask(new AsyncResult() {
-                @Override
-                public void onResult(JSONObject object) {
-                    processJson(object);
-                }
-            }).execute(SpreadSheetURL_);
+            try {
+                new DownloadWebPageTask(new AsyncResult() {
+                    @Override
+                    public void onResult(JSONObject object) {
+                        processJson(object);
+                    }
+                }).execute(SpreadSheetURL_);
 
-            //update repeatably
-            t.start();
+                //update repeatably
+                t.start();
+            } catch (StringIndexOutOfBoundsException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
     }
 

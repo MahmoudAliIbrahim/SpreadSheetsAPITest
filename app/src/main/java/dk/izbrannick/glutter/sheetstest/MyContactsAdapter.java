@@ -38,12 +38,12 @@ public class MyContactsAdapter extends ArrayAdapter<MyContact> {
         if (o != null) {
             TextView name = (TextView) v.findViewById(R.id.name);
             TextView numberPrimary = (TextView) v.findViewById(R.id.numberPrimary);
-            TextView numberSecondary = (TextView) v.findViewById(R.id.numberSecondary);
+            TextView isOnRecipientList = (TextView) v.findViewById(R.id.isOnRecipientList);
             TextView numberOther = (TextView) v.findViewById(R.id.numberOther);
 
             name.setText(o.getName());
             numberPrimary.setText(o.getNumberPrimary());
-            numberSecondary.setText(o.getNumberSecondary());
+            isOnRecipientList.setText(String.valueOf(o.getOnRecipientList()));
             numberOther.setText(o.getNumberOther());
         }
         return v;

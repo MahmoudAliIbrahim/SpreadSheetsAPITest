@@ -6,15 +6,15 @@ package dk.izbrannick.glutter.sheetstest;
 
 public class MyContact {
     private String name;
-    private String numberPrimary, numberSecondary, numberOther;
-    private boolean isLeader;
+    private String numberPrimary, numberOther;
+    private boolean isLeader, isOnRecipientList;
 
-    public MyContact(String name, String numberPrimary, String numberSecondary, String numberOther, boolean isLeader) {
+    public MyContact(String name, String numberPrimary, boolean isOnRecipientList, String numberOther, boolean isLeader) {
 
         this.setName(name);
         this.setNumberPrimary(numberPrimary);
-        this.setNumberSecondary(numberSecondary);
         this.setNumberOther(numberOther);
+        this.setOnRecipientList(isOnRecipientList);
         this.setLeaderState(isLeader);
     }
 
@@ -34,12 +34,12 @@ public class MyContact {
         this.numberPrimary = numberPrimary;
     }
 
-    public String getNumberSecondary() {
-        return numberSecondary;
+    public boolean getOnRecipientList() {
+        return isOnRecipientList;
     }
 
-    public void setNumberSecondary(String numberSecondary) {
-        this.numberSecondary = numberSecondary;
+    public void setOnRecipientList(boolean onRecipientList) {
+        this.isOnRecipientList = onRecipientList;
     }
 
     public String getNumberOther() {

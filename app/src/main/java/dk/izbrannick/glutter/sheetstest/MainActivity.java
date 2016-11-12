@@ -38,21 +38,15 @@ public class MainActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.SEND_SMS},1);
         if (networkInfo != null && networkInfo.isConnected()) {
 
-            try {
-                new DownloadWebPageTask(new AsyncResult() {
-                    @Override
-                    public void onResult(JSONObject object) {
-                        processJson(object);
-                    }
-                }).execute(SpreadSheetURL_);
+            new DownloadWebPageTask(new AsyncResult() {
+                @Override
+                public void onResult(JSONObject object) {
+                    processJson(object);
+                }
+            }).execute(SpreadSheetURL_);
 
-                //update repeatably
-                t.start();
-            } catch (StringIndexOutOfBoundsException e) {
-                e.printStackTrace();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            //update repeatably
+            t.start();
 
         }
     }
@@ -102,8 +96,8 @@ public class MainActivity extends AppCompatActivity {
 
                 String name = "";
                 boolean isLeader = false;
+                boolean isOnRecipientList = false;
                 String numberPrimary = "0";
-                String numberSecondary = "0";
                 String numberOther = "0";
 
                 try {
@@ -119,23 +113,25 @@ public class MainActivity extends AppCompatActivity {
                 }catch (Exception e){}
 
                 try {
-                    numberSecondary = columns.getJSONObject(3).getString("f");
+                    numberOther = columns.getJSONObject(3).getString("f");
                 }catch (Exception e){}
 
                 try {
-                    numberOther = columns.getJSONObject(4).getString("f");
+                    isOnRecipientList = columns.getJSONObject(4).getBoolean("v");
                 }catch (Exception e){}
 
                 try {
-                    groupMessage = columns.getJSONObject(10).getString("v");
+                    groupMessage = columns.getJSONObject(5).getString("v");
                 }catch (Exception e){}
 
-                MyContact myContact = new MyContact(name, numberPrimary, numberSecondary, numberOther, isLeader);
 
-                myContacts.add(myContact);
-                myContactsAllNumbers.add(myContact.getNumberPrimary());
-                if (myContact.isLeader()) {
-                    myContactsLeaderNumbers.add(myContact.getNumberPrimary());
+                    MyContact myContact = new MyContact(name, numberPrimary, isOnRecipientList, numberOther, isLeader);
+                    myContacts.add(myContact);
+                if (myContact.getOnRecipientList()) {
+                    myContactsAllNumbers.add(myContact.getNumberPrimary());
+                    if (myContact.isLeader()) {
+                        myContactsLeaderNumbers.add(myContact.getNumberPrimary());
+                    }
                 }
             }
 

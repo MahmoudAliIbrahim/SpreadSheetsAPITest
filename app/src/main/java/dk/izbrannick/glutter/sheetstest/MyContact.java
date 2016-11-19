@@ -5,17 +5,17 @@ package dk.izbrannick.glutter.sheetstest;
  */
 
 public class MyContact {
-    private String name;
-    private String numberPrimary, numberOther;
+    private String name, numberPrimary, numberOther, credit;
     private boolean isLeader, isOnRecipientList;
 
-    public MyContact(String name, String numberPrimary, boolean isOnRecipientList, String numberOther, boolean isLeader) {
+    public MyContact(String name, String numberPrimary, boolean isOnRecipientList, String numberOther, boolean isLeader, String credit) {
 
         this.setName(name);
         this.setNumberPrimary(numberPrimary);
         this.setNumberOther(numberOther);
         this.setOnRecipientList(isOnRecipientList);
         this.setLeaderState(isLeader);
+        this.credit = credit;
     }
 
     public String getName() {
@@ -56,5 +56,13 @@ public class MyContact {
 
     public void setLeaderState(boolean leader) {
         isLeader = leader;
+    }
+
+    public String getCredit() {
+        return credit;
+    }
+
+    public void setCredit(String credit) {
+        this.credit = credit;
     }
 }

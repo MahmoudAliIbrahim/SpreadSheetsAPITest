@@ -37,6 +37,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.security.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -72,7 +74,7 @@ public class MainActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         UpdateService updateService = new UpdateService();
-        
+
         LinearLayout activityLayout = new LinearLayout(this);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -366,7 +368,8 @@ public class MainActivity extends Activity
         public List<String> appendSheetApi() throws IOException {
 
             List<Object> results = new ArrayList<>();
-            results.add("This is a test");
+            results.add("This is a test, initiated from app");
+            results.add(currentTime_);
             List<List<Object>> resultsInResults = new ArrayList<>();
             resultsInResults.add(results);
 

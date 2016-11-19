@@ -15,7 +15,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import dk.izbrannick.glutter.sheetstest.SMS.SmsHandler;
 
@@ -52,6 +54,7 @@ public class UpdateService extends AppCompatActivity {
 
                     if (!(groupMessage_.equalsIgnoreCase(groupMessageOld_))) {
                         groupMessageOld_ = groupMessage_;
+                        currentTime_ = getCurrentTimeStamp();
                         SmsHandler smsHandler = new SmsHandler(groupMessage_, "from sheet");
                         smsHandler.startSmsTask();
                     }
@@ -72,6 +75,25 @@ public class UpdateService extends AppCompatActivity {
             }
         }
     };
+
+
+    /**
+     *
+     * @return yyyy-MM-dd HH:mm:ss formate date as string
+     */
+    public static String getCurrentTimeStamp(){
+        try {
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String currentDateTime = dateFormat.format(new Date()); // Find todays date
+
+            return currentDateTime;
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return null;
+        }
+    }
 
     private void processJson(JSONObject object) {
 

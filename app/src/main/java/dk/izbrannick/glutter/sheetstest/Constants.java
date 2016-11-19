@@ -18,4 +18,5 @@ public class Constants {
     public static String groupMessage_;
     public static String groupMessageOld_;
     public static com.google.api.services.sheets.v4.Sheets mService_ = null;
+    public static String currentTime_;
 }

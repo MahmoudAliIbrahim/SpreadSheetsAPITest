@@ -1,21 +1,34 @@
 package dk.izbrannick.glutter.sheetstest;
 
+import java.util.ArrayList;
+
 /**
  * Created by luther on 03/11/2016.
  */
 
 public class MyContact {
-    private String name, numberPrimary, numberOther, credit;
-    private boolean isLeader, isOnRecipientList;
+    private String name, numberPrimary, email, credit;
+    private boolean isOnRecipientList;
+    private ArrayList<String> groups;
 
-    public MyContact(String name, String numberPrimary, boolean isOnRecipientList, String numberOther, boolean isLeader, String credit) {
+    public MyContact(String name, String numberPrimary, boolean isOnRecipientList, String email, ArrayList<String> groups, String credit) {
 
         this.setName(name);
         this.setNumberPrimary(numberPrimary);
-        this.setNumberOther(numberOther);
+        this.setNumberOther(email);
         this.setOnRecipientList(isOnRecipientList);
-        this.setLeaderState(isLeader);
+        this.setGroups(groups);
         this.credit = credit;
+    }
+
+    public MyContact(Object name, Object numberPrimary, Object isOnRecipientList, Object email, Object groups, Object credit) {
+
+        this.setName(String.valueOf(name));
+        this.setNumberPrimary(String.valueOf(numberPrimary));
+        this.setNumberOther(String.valueOf(email));
+        this.setOnRecipientList(Boolean.valueOf(String.valueOf(isOnRecipientList)));
+        this.setGroups(groups);
+        this.setCredit(String.valueOf(credit));
     }
 
     public String getName() {
@@ -43,20 +56,13 @@ public class MyContact {
     }
 
     public String getNumberOther() {
-        return numberOther;
+        return email;
     }
 
     public void setNumberOther(String numberOther) {
-        this.numberOther = numberOther;
+        this.email = numberOther;
     }
 
-    public boolean isLeader() {
-        return isLeader;
-    }
-
-    public void setLeaderState(boolean leader) {
-        isLeader = leader;
-    }
 
     public String getCredit() {
         return credit;
@@ -64,5 +70,28 @@ public class MyContact {
 
     public void setCredit(String credit) {
         this.credit = credit;
+    }
+
+    public ArrayList<String> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(ArrayList<String> groups) {
+        //TODO: find out if this is needed
+        this.groups = new ArrayList<>();
+        this.groups = groups;
+    }
+
+    public void setGroups(Object groups) {
+        //TODO: find out if this is needed
+        this.groups = new ArrayList<>();
+
+        String groupsString = (String) groups;
+        if (groupsString.contains(","))
+        {
+            for (int i =  0; i <= groupsString.split(",").length; i++) {
+                this.groups.add(groupsString.split(",")[i]);
+            }
+        }
     }
 }

@@ -4,11 +4,6 @@ package dk.izbrannick.glutter.sheetstest;
  * Created by luther on 19/11/2016.
  */
 
-import android.Manifest;
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 
 import org.json.JSONArray;
@@ -144,6 +139,7 @@ public class UpdateService extends AppCompatActivity {
                 }catch (Exception e){}
 
 
+                /*
 
                 MyContact myContact = new MyContact(name, numberPrimary, isOnRecipientList, numberOther, isLeader, credit);
                 myContacts_.add(myContact);
@@ -153,6 +149,7 @@ public class UpdateService extends AppCompatActivity {
                         myContactsLeaderNumbers_.add(myContact.getNumberPrimary());
                     }
                 }
+                */
             }
         } catch (JSONException e) {
             e.printStackTrace();

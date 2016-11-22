@@ -37,8 +37,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.IOException;
-import java.security.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -350,7 +348,8 @@ public class MainActivity extends Activity
         @Override
         protected List<String> doInBackground(Void... params) {
             try {
-                return appendSheetApi();
+                //return appendSheetApi();
+                return getDataFromApi();
             } catch (Exception e) {
                 mLastError = e;
                 cancel(true);
@@ -359,8 +358,8 @@ public class MainActivity extends Activity
         }
 
         /**
-         * Fetch a list of names and majors of students in a sample spreadsheet:
-         * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
+         * Fetch a list of names and numbers of participants in a spreadsheet:
+         * https://docs.google.com/spreadsheets/d/................../edit
          *
          * @return List of names and majors
          * @throws IOException
@@ -394,6 +393,39 @@ public class MainActivity extends Activity
 
 
             return asdasdas;
+        }
+
+        /**
+         * Fetch a list of names and majors of students in a sample spreadsheet:
+         * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
+         * @return List of names and majors
+         * @throws IOException
+         */
+        private List<String> getDataFromApi() throws IOException {
+            String range = "Contact!A1:F";
+            List<String> results = new ArrayList<>();
+            ValueRange response = mService_.spreadsheets().values()
+                    .get(spreadsheetsIdOnly_, range)
+                    .execute();
+            List<List<Object>> values = response.getValues();
+            if (values != null) {
+                //results.add("Name, Number");
+                for (List row : values) {
+
+                    Object o1,o2,o3,o4,o5, o6;
+                    o1 = row.get(0);
+                    o2 = row.get(1);
+                    o3 = row.get(2);
+                    o4 = row.get(3);
+                    o5 = row.get(4);
+                    o6 = row.get(5);
+
+
+                    MyContact myContact = new MyContact(row.get(0), row.get(1), row.get(2), row.get(3), row.get(4), row.get(5));
+                    results.add(row.get(0) + ", " + row.get(1));
+                }
+            }
+            return results;
         }
 
 

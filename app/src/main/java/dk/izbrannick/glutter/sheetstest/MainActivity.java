@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import dk.izbrannick.glutter.sheetstest.API.APICalls;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -61,7 +62,6 @@ public class MainActivity extends Activity
     private static final String BUTTON_TEXT = "Call Google Sheets API";
     private static final String PREF_ACCOUNT_NAME = "glutterdroid@gmail.com";
     private static final String[] SCOPES = {SheetsScopes.SPREADSHEETS};
-    final String clientID = "381301001957-mr1macc33i2gq9c77aj544r8u8p64ru1.apps.googleusercontent.com";
 
     /**
      * Create the main activity.
@@ -348,8 +348,9 @@ public class MainActivity extends Activity
         @Override
         protected List<String> doInBackground(Void... params) {
             try {
+                return getAndAppend();
                 //return appendSheetApi();
-                return getDataFromApi();
+                //return getDataFromApi();
             } catch (Exception e) {
                 mLastError = e;
                 cancel(true);
@@ -366,38 +367,15 @@ public class MainActivity extends Activity
          */
         public List<String> appendSheetApi() throws IOException {
 
-            List<Object> results = new ArrayList<>();
-            results.add("This is a test, initiated from app");
-            results.add(currentTime_);
-            List<List<Object>> resultsInResults = new ArrayList<>();
-            resultsInResults.add(results);
 
-            ValueRange response = new ValueRange();
+            APICalls.appendToSheetWithTimeStamp(spreadsheetsIdOnly_, "messages!A1:A", "Refakturering - Main");
 
-            response.setRange("messages!A1:A");
-            response.setValues(resultsInResults);
-
-            List<List<Object>> values = response.getValues();
-
-            ValueRange valueRange = new ValueRange();
-            valueRange.setValues(values);
-
-            mService_.spreadsheets().values().append(spreadsheetsIdOnly_, "messages!A1:A", valueRange).setValueInputOption("RAW").execute();
-            if (values != null) {
-                for (List row : values) {
-                    results.add(row.get(0) + ", " + row.get(0));
-                }
-            }
-
-            ArrayList<String> asdasdas = new ArrayList<>();
-
-
-            return asdasdas;
+            return null;
         }
 
         /**
          * Fetch a list of names and majors of students in a sample spreadsheet:
-         * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
+         * https://docs.google.com/spreadsheets/d/1jxuF1ytooaTRwc-qDq5tHMwhJc7f5JtmM6zbb4mCN1I/edit
          * @return List of names and majors
          * @throws IOException
          */
@@ -426,6 +404,11 @@ public class MainActivity extends Activity
                 }
             }
             return results;
+        }
+
+        public List<String> getAndAppend() throws IOException {
+            appendSheetApi();
+            return getDataFromApi();
         }
 
 

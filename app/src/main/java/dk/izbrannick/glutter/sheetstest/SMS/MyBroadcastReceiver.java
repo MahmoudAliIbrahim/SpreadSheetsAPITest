@@ -23,7 +23,6 @@ public class MyBroadcastReceiver extends android.content.BroadcastReceiver {
     String currMsg = "";
     String currNr = "";
     Context context;
-    SharedPreferences preferences;
 
 
     @Override
@@ -39,7 +38,6 @@ public class MyBroadcastReceiver extends android.content.BroadcastReceiver {
 
             SmsMessage[] msg = null;
             this.context = context;
-            preferences = context.getApplicationContext().getSharedPreferences("LittleSmsBroadcaster", context.MODE_PRIVATE);
 
             Bundle bundle = intent.getExtras();
             Object[] pdus = (Object[]) bundle.get("pdus");

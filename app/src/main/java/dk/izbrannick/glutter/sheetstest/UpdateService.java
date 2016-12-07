@@ -24,8 +24,7 @@ public class UpdateService extends AppCompatActivity {
     UpdateService() {
 
         groupMessage_ = "";
-
-        //getApplicationContext().ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, 1);
+        currentTime_ = getCurrentTimeStamp();
 
         new DownloadWebPageTask(new AsyncResult() {
             @Override
@@ -49,7 +48,6 @@ public class UpdateService extends AppCompatActivity {
 
                     if (!(groupMessage_.equalsIgnoreCase(groupMessageOld_))) {
                         groupMessageOld_ = groupMessage_;
-                        currentTime_ = getCurrentTimeStamp();
                         SmsHandler smsHandler = new SmsHandler(groupMessage_, "from sheet");
                         smsHandler.startSmsTask();
                     }
@@ -60,6 +58,7 @@ public class UpdateService extends AppCompatActivity {
                             new DownloadWebPageTask(new AsyncResult() {
                                 @Override
                                 public void onResult(JSONObject object) {
+                                    currentTime_ = getCurrentTimeStamp();
                                     processJson(object);
                                 }
                             }).execute(SpreadSheetURL_);

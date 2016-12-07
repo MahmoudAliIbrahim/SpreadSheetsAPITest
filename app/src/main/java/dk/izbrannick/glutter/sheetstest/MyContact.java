@@ -89,7 +89,7 @@ public class MyContact {
         String groupsString = (String) groups;
         if (groupsString.contains(","))
         {
-            for (int i =  0; i <= groupsString.split(",").length; i++) {
+            for (int i =  0; i < groupsString.split(",").length; i++) {
                 this.groups.add(groupsString.split(",")[i]);
             }
         }

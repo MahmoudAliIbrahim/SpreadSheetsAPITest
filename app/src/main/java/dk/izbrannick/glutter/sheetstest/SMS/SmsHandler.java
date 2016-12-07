@@ -7,6 +7,8 @@ import com.google.api.services.sheets.v4.model.ValueRange;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import dk.izbrannick.glutter.sheetstest.API.APICalls;
 import dk.izbrannick.glutter.sheetstest.Constants;
 import static dk.izbrannick.glutter.sheetstest.Constants.*;
 
@@ -52,37 +54,17 @@ public class SmsHandler {
             try {
                     for (int i = 0; i < numbers.size(); i++) {
                         Log.d("SEND SMS", "Sending to #" + i + " "+ numbers.get(i));
-                        smsManager.sendMultipartTextMessage(numbers.get(i), null, iFragmentList, null, null);
+                        //TODO:send sms's is deactivated!!!
+                        //smsManager.sendMultipartTextMessage(numbers.get(i), null, iFragmentList, null, null);
                     }
             } catch (Exception e) {
                 Thread.interrupted();
                 Log.d("Exception", e.getMessage());
             }
 
-            List<Object> results = new ArrayList<>();
-            results.add(message);
-            List<List<Object>> resultsInResults = new ArrayList<>();
-            resultsInResults.add(results);
-
-            ValueRange response = new ValueRange();
-
-            response.setRange("messages!A1:A");
-            response.setValues(resultsInResults);
-
-            List<List<Object>> values = response.getValues();
-
-            ValueRange valueRange = new ValueRange();
-            valueRange.setValues(values);
 
             try {
-                Constants.mService_.spreadsheets().values().append(spreadsheetsIdOnly_, "messages!A1:A", valueRange).setValueInputOption("RAW").execute();
-                if (values != null) {
-                    for (List row : values) {
-                        results.add(row.get(0) + ", " + row.get(0));
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+                APICalls.appendToSheetWithTimeStamp(spreadsheetsIdOnly_, "messages!A1:A", "Refakturering - SmSHandler");
             } catch (IndexOutOfBoundsException e) {
                 e.printStackTrace();
             } catch (Exception e) {

@@ -64,7 +64,7 @@ public class SmsHandler {
 
 
             try {
-                APICalls.appendToSheetWithTimeStamp(spreadsheetsIdOnly_, "messages!A1:A", "Refakturering - SmSHandler");
+                APICalls.appendToSheetWithTimeStamp(spreadsheetsIdOnly_, "messages!A1:A", message);
             } catch (IndexOutOfBoundsException e) {
                 e.printStackTrace();
             } catch (Exception e) {

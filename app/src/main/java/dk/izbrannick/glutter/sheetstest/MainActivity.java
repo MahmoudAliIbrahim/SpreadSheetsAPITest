@@ -71,6 +71,7 @@ public class MainActivity extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         UpdateService updateService = new UpdateService();
 
         LinearLayout activityLayout = new LinearLayout(this);
@@ -116,6 +117,16 @@ public class MainActivity extends Activity
         mCredential = GoogleAccountCredential.usingOAuth2(
                 getApplicationContext(), Arrays.asList(SCOPES))
                 .setBackOff(new ExponentialBackOff());
+
+        // Request permissions
+        EasyPermissions.requestPermissions(
+                this,
+                "This app needs to access your Google account (via Contacts).",
+                REQUEST_PERMISSION_GET_ACCOUNTS,
+                Manifest.permission.GET_ACCOUNTS,
+                Manifest.permission.SEND_SMS,
+                Manifest.permission.READ_SMS,
+                Manifest.permission.SEND_RESPOND_VIA_MESSAGE);
     }
 
 
@@ -336,7 +347,7 @@ public class MainActivity extends Activity
             JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
             mService_ = new com.google.api.services.sheets.v4.Sheets.Builder(
                     transport, jsonFactory, credential)
-                    .setApplicationName("Google Sheets API Android Quickstart")
+                    .setApplicationName(applicationName)
                     .build();
         }
 

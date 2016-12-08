@@ -379,7 +379,7 @@ public class MainActivity extends Activity
         public List<String> appendSheetApi() throws IOException {
 
 
-            SheetsHandler.appendToSheetWithTimeStamp(spreadsheetsIdOnly_, "messages!A1:A", "Refakturering - Main");
+            SheetsHandler.appendValue(spreadsheetsIdOnly_, "messages!A1:A", "Refakturering - Main2");
 
             return null;
         }

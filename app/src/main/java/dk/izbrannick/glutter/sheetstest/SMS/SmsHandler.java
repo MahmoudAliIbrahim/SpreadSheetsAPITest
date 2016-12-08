@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import dk.izbrannick.glutter.sheetstest.API.SheetsHandler;
 
 import static dk.izbrannick.glutter.sheetstest.Constants.*;
+import static dk.izbrannick.glutter.sheetstest.UpdateService.getCurrentTimeStamp;
 
 /**
  * Created by u321424 on 07-11-2016.
@@ -62,7 +63,12 @@ public class SmsHandler {
 
 
             try {
-                SheetsHandler.appendToSheetWithTimeStamp(spreadsheetsIdOnly_, "messages!A1:A", message);
+                ArrayList<Object> values = new ArrayList<>();
+                values.add(message);
+                values.add(getCurrentTimeStamp());
+                values.add(true);
+
+                SheetsHandler.appendValues(spreadsheetsIdOnly_, "messages!A1:A", values);
             } catch (IndexOutOfBoundsException e) {
                 e.printStackTrace();
             } catch (Exception e) {

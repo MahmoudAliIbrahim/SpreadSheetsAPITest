@@ -78,20 +78,20 @@ public class SheetsHandler {
     /**
      * Fetch a list of names and majors of students in a sample spreadsheet:
      * https://docs.google.com/spreadsheets/d/1jxuF1ytooaTRwc-qDq5tHMwhJc7f5JtmM6zbb4mCN1I/edit
-     * @return ArrayList<String> with row[0] + row[1]
+     * @return ArrayList<Object> with row[rowNumber]
      * @throws IOException
      * @param range example = "Contact!A1:F"
      */
-    public static List<String> getDataFromApi(String spreadSheetId, String range) throws IOException {
+    public static List<Object> getRow(String spreadSheetId, String range, int rowNumber) throws IOException {
 
-        List<String> results = new ArrayList<>();
+        List<Object> results = new ArrayList<>();
         ValueRange response = mService_.spreadsheets().values()
                 .get(spreadSheetId, range)
                 .execute();
         List<List<Object>> values = response.getValues();
         if (values != null) {
             for (List row : values) {
-                results.add(row.get(0) + ", " + row.get(1));
+                results.add(row.get(rowNumber));
             }
         }
         return results;

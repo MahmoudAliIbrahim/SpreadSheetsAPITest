@@ -3,13 +3,11 @@ package dk.izbrannick.glutter.sheetstest.SMS;
 import android.os.AsyncTask;
 import android.telephony.SmsManager;
 import android.util.Log;
-import com.google.api.services.sheets.v4.model.ValueRange;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
-import dk.izbrannick.glutter.sheetstest.API.APICalls;
-import dk.izbrannick.glutter.sheetstest.Constants;
+import java.util.ArrayList;
+
+import dk.izbrannick.glutter.sheetstest.API.SheetsHandler;
+
 import static dk.izbrannick.glutter.sheetstest.Constants.*;
 
 /**
@@ -64,7 +62,7 @@ public class SmsHandler {
 
 
             try {
-                APICalls.appendToSheetWithTimeStamp(spreadsheetsIdOnly_, "messages!A1:A", message);
+                SheetsHandler.appendToSheetWithTimeStamp(spreadsheetsIdOnly_, "messages!A1:A", message);
             } catch (IndexOutOfBoundsException e) {
                 e.printStackTrace();
             } catch (Exception e) {

@@ -41,7 +41,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import dk.izbrannick.glutter.sheetstest.API.APICalls;
+import dk.izbrannick.glutter.sheetstest.API.SheetsHandler;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -379,7 +379,7 @@ public class MainActivity extends Activity
         public List<String> appendSheetApi() throws IOException {
 
 
-            APICalls.appendToSheetWithTimeStamp(spreadsheetsIdOnly_, "messages!A1:A", "Refakturering - Main");
+            SheetsHandler.appendToSheetWithTimeStamp(spreadsheetsIdOnly_, "messages!A1:A", "Refakturering - Main");
 
             return null;
         }

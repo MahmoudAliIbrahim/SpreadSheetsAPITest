@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dk.izbrannick.glutter.sheetstest.Constants;
+import dk.izbrannick.glutter.sheetstest.MyContact;
 
 import static dk.izbrannick.glutter.sheetstest.Constants.mService_;
 
@@ -78,22 +79,58 @@ public class SheetsHandler {
     /**
      * Fetch a list of names and majors of students in a sample spreadsheet:
      * https://docs.google.com/spreadsheets/d/1jxuF1ytooaTRwc-qDq5tHMwhJc7f5JtmM6zbb4mCN1I/edit
-     * @return ArrayList<Object> with row[rowNumber]
+     * @return ArrayList<Object> with column[columnNumber]
      * @throws IOException
      * @param range example = "Contact!A1:F"
      */
-    public static List<Object> getRow(String spreadSheetId, String range, int rowNumber) throws IOException {
+    public static List<Object> getColumnObjects(String spreadSheetId, String range, int columnNumber) throws IOException {
 
         List<Object> results = new ArrayList<>();
-        ValueRange response = mService_.spreadsheets().values()
-                .get(spreadSheetId, range)
-                .execute();
+        ValueRange response = mService_.spreadsheets().values().get(spreadSheetId, range).execute();
         List<List<Object>> values = response.getValues();
         if (values != null) {
             for (List row : values) {
-                results.add(row.get(rowNumber));
+                results.add(row.get(columnNumber));
             }
         }
         return results;
+    }
+
+
+    /**
+     * Gets a list of objects of contacts from a spreadsheet:
+     * https://docs.google.com/spreadsheets/d/....................../edit
+     * @return List<MyContact> list of all contacts
+     * @throws IOException
+     * @param range example = "Contact!A1:F"
+     */
+    public static List<MyContact> getAllContacs(String spreadSheetId, String range) throws IOException {
+
+        List<MyContact> myContacts = new ArrayList<>();
+        ValueRange response = mService_.spreadsheets().values().get(spreadSheetId, range).execute();
+        List<List<Object>> values = response.getValues();
+        if (values != null) {
+            for (List row : values) {
+
+                Object o1,o2,o3,o4,o5, o6;
+                o1 = row.get(0);
+                o2 = row.get(1);
+                o3 = row.get(2);
+                o4 = row.get(3);
+                o5 = row.get(4);
+                o6 = row.get(5);
+
+                try {
+                    MyContact myContact = new MyContact(row.get(0), row.get(1), row.get(2), row.get(3), row.get(4), row.get(5));
+
+                    myContacts.add(myContact);
+                }catch (Exception r)
+                {
+                    r.printStackTrace();
+                    return null;
+                }
+            }
+        }
+        return myContacts;
     }
 }

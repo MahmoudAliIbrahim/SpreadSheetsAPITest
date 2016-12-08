@@ -391,30 +391,15 @@ public class MainActivity extends Activity
          * @throws IOException
          */
         private List<String> getDataFromApi() throws IOException {
-            String range = "Contact!A1:F";
-            List<String> results = new ArrayList<>();
-            ValueRange response = mService_.spreadsheets().values()
-                    .get(spreadsheetsIdOnly_, range)
-                    .execute();
-            List<List<Object>> values = response.getValues();
-            if (values != null) {
-                //results.add("Name, Number");
-                for (List row : values) {
+            List<MyContact> contacs = SheetsHandler.getAllContacs(spreadsheetsIdOnly_, "Contact!A1:F");
 
-                    Object o1,o2,o3,o4,o5, o6;
-                    o1 = row.get(0);
-                    o2 = row.get(1);
-                    o3 = row.get(2);
-                    o4 = row.get(3);
-                    o5 = row.get(4);
-                    o6 = row.get(5);
+            List<String> contacsInfo = new ArrayList<>();
 
-
-                    MyContact myContact = new MyContact(row.get(0), row.get(1), row.get(2), row.get(3), row.get(4), row.get(5));
-                    results.add(row.get(0) + ", " + row.get(1));
-                }
+            for (MyContact c:
+                 contacs) {
+                contacsInfo.add(c.getName());
             }
-            return results;
+            return contacsInfo;
         }
 
         public List<String> getAndAppend() throws IOException {

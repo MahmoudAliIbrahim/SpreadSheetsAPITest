@@ -10,10 +10,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import dk.izbrannick.glutter.sheetstest.API.SheetsHandler;
 import dk.izbrannick.glutter.sheetstest.SMS.SmsHandler;
 
 import static dk.izbrannick.glutter.sheetstest.Constants.*;
@@ -29,7 +31,13 @@ public class UpdateService extends AppCompatActivity {
         new DownloadWebPageTask(new AsyncResult() {
             @Override
             public void onResult(JSONObject object) {
-                processJson(object);
+                /*
+                try {
+                    SheetsHandler.getAllContacs(spreadsheetsIdOnly_, "Contact!A1:F");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                */
             }
         }).execute(SpreadSheetURL_);
 
@@ -54,12 +62,11 @@ public class UpdateService extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            // update TextView here!
+                            // update here!
                             new DownloadWebPageTask(new AsyncResult() {
                                 @Override
                                 public void onResult(JSONObject object) {
                                     currentTime_ = getCurrentTimeStamp();
-                                    processJson(object);
                                 }
                             }).execute(SpreadSheetURL_);
                         }
@@ -86,72 +93,6 @@ public class UpdateService extends AppCompatActivity {
             e.printStackTrace();
 
             return null;
-        }
-    }
-
-    private void processJson(JSONObject object) {
-
-        try {
-            myContacts_ = new ArrayList<>();
-            myContactsAllNumbers_ = new ArrayList<>();
-            myContactsLeaderNumbers_ = new ArrayList<>();
-            JSONArray rows = object.getJSONArray("rows");
-
-            for (int r = 0; r < rows.length(); ++r) {
-                JSONObject row = rows.getJSONObject(r);
-                JSONArray columns = row.getJSONArray("c");
-
-                String name = "";
-                boolean isLeader = false;
-                boolean isTester = false;
-                boolean isOnRecipientList = false;
-                String numberPrimary = "0";
-                String numberOther = "0";
-                String credit = "";
-
-                try {
-                    name = columns.getJSONObject(0).getString("v");
-                }catch (Exception e){}
-
-                try {
-                    isLeader = columns.getJSONObject(1).getBoolean("v");
-                }catch (Exception e){}
-
-                try {
-                    numberPrimary = columns.getJSONObject(2).getString("f");
-                }catch (Exception e){}
-
-                try {
-                    numberOther = columns.getJSONObject(3).getString("f");
-                }catch (Exception e){}
-
-                try {
-                    isOnRecipientList = columns.getJSONObject(4).getBoolean("v");
-                }catch (Exception e){}
-
-                try {
-                    groupMessage_ = columns.getJSONObject(5).getString("v");
-                }catch (Exception e){}
-
-                try {
-                    credit = columns.getJSONObject(6).getString("v");
-                }catch (Exception e){}
-
-
-                /*
-
-                MyContact myContact = new MyContact(name, numberPrimary, isOnRecipientList, numberOther, isLeader, credit);
-                myContacts_.add(myContact);
-                if (myContact.getOnRecipientList()) {
-                    myContactsAllNumbers_.add(myContact.getNumberPrimary());
-                    if (myContact.isLeader()) {
-                        myContactsLeaderNumbers_.add(myContact.getNumberPrimary());
-                    }
-                }
-                */
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
     }
 

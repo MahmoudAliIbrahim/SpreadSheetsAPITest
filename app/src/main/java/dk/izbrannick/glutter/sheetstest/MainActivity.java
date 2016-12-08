@@ -386,7 +386,7 @@ public class MainActivity extends Activity
 
         /**
          * Fetch a list of names and majors of students in a sample spreadsheet:
-         * https://docs.google.com/spreadsheets/d/1jxuF1ytooaTRwc-qDq5tHMwhJc7f5JtmM6zbb4mCN1I/edit
+         * https://docs.google.com/spreadsheets/d/............/edit
          * @return List of names and majors
          * @throws IOException
          */
@@ -405,7 +405,6 @@ public class MainActivity extends Activity
             appendSheetApi();
             return getDataFromApi();
         }
-
 
         @Override
         protected void onPreExecute() {

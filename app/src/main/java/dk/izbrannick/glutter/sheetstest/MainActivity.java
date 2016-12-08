@@ -395,9 +395,8 @@ public class MainActivity extends Activity
 
             List<String> contacsInfo = new ArrayList<>();
 
-            for (MyContact c:
-                 contacs) {
-                contacsInfo.add(c.getName());
+            for (MyContact c : contacs) {
+                contacsInfo.add( c.getName() + " - " + c.getCredit() );
             }
             return contacsInfo;
         }

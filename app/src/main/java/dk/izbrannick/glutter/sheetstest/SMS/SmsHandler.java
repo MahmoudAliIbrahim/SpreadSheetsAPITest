@@ -68,7 +68,7 @@ public class SmsHandler {
                 values.add(getCurrentTimeStamp());
                 values.add(true);
 
-                SheetsHandler.appendValues(spreadsheetsIdOnly_, "messages!A1:A", values);
+                SheetsHandler.appendValues(sheetId, "messages!A1:A", values);
             } catch (IndexOutOfBoundsException e) {
                 e.printStackTrace();
             } catch (Exception e) {

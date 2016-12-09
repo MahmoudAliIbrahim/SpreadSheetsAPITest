@@ -429,8 +429,11 @@ public class MainActivity extends Activity
          */
         public List<String> appendSheetApi() throws IOException {
 
+            ArrayList<Object> textValues = new ArrayList<>();
+            textValues.add("Call Google Sheets API Button Pressed");
+            textValues.add(currentTime_);
 
-            SheetsHandler.appendValue(spreadsheetsIdOnly_, "messages!A1:A", "Refakturering - Main2");
+            SheetsHandler.appendValues(sheetId, "messages!A1:A", textValues);
 
             return null;
         }
@@ -442,7 +445,7 @@ public class MainActivity extends Activity
          * @throws IOException
          */
         private List<String> getDataFromApi() throws IOException {
-            List<MyContact> contacs = SheetsHandler.getAllContacs(spreadsheetsIdOnly_, "Contact!A1:F");
+            List<MyContact> contacs = SheetsHandler.getAllContacs(sheetId, "Contact!A1:F");
 
             List<String> contacsInfo = new ArrayList<>();
 

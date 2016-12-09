@@ -6,6 +6,8 @@ package dk.izbrannick.glutter.sheetstest;
 
 import android.support.v7.app.AppCompatActivity;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -40,7 +42,7 @@ public class UpdateService extends AppCompatActivity {
 
                     // Update Contacts
                     try {
-                        StaticDB.myContacts_ = SheetsHandler.getAllContacs(spreadsheetsIdOnly_, "Contact!A1:F");
+                        StaticDB.myContacts_ = SheetsHandler.getAllContacs(sheetId, "Contact!A1:F");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -54,6 +56,17 @@ public class UpdateService extends AppCompatActivity {
 
                     //Update timestamp
                     currentTime_ = getCurrentTimeStamp();
+
+
+                    /*
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            // update here!
+
+                        }
+                    });
+                    */
                 }
             } catch (InterruptedException e) {
             }

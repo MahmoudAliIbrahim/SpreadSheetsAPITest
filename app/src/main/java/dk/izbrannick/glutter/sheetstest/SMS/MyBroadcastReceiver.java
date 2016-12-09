@@ -7,12 +7,9 @@ package dk.izbrannick.glutter.sheetstest.SMS;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.widget.Toast;
-
-import static dk.izbrannick.glutter.sheetstest.Constants.*;
 
 /**
  * Created by luther on 02/04/15.

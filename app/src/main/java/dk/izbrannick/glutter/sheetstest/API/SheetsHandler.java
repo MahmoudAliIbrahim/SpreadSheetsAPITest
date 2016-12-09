@@ -7,10 +7,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import dk.izbrannick.glutter.sheetstest.Constants;
+import dk.izbrannick.glutter.sheetstest.StaticDB;
 import dk.izbrannick.glutter.sheetstest.MyContact;
 
-import static dk.izbrannick.glutter.sheetstest.Constants.mService_;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.mService_;
 
 /**
  * Created by u321424 on 07-12-2016.
@@ -40,7 +40,7 @@ public class SheetsHandler {
         ValueRange valueRange = new ValueRange();
         valueRange.setValues(values);
         try {
-            return Constants.mService_.spreadsheets().values().append(sheetId, range, valueRange).setValueInputOption("RAW").execute();
+            return StaticDB.mService_.spreadsheets().values().append(sheetId, range, valueRange).setValueInputOption("RAW").execute();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -67,7 +67,7 @@ public class SheetsHandler {
         ValueRange valueRange = new ValueRange();
         valueRange.setValues(values);
         try {
-            return Constants.mService_.spreadsheets().values().append(sheetId, range, valueRange).setValueInputOption("RAW").execute();
+            return StaticDB.mService_.spreadsheets().values().append(sheetId, range, valueRange).setValueInputOption("RAW").execute();
         } catch (IOException e) {
             e.printStackTrace();
         }

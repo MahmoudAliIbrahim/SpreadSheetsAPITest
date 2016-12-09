@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import dk.izbrannick.glutter.sheetstest.API.SheetsHandler;
 
-import static dk.izbrannick.glutter.sheetstest.Constants.*;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.*;
 import static dk.izbrannick.glutter.sheetstest.UpdateService.getCurrentTimeStamp;
 
 /**

@@ -91,7 +91,6 @@ public class MainActivity extends Activity
         mCallApiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UpdateService updateService = new UpdateService();
                 mCallApiButton.setEnabled(false);
                 mOutputText.setText("");
                 getResultsFromApi();
@@ -474,6 +473,7 @@ public class MainActivity extends Activity
             } else {
                 output.add(0, "Data retrieved using the Google Sheets API:");
                 mOutputText.setText(TextUtils.join("\n", output));
+                UpdateService updateService = new UpdateService();
             }
         }
 

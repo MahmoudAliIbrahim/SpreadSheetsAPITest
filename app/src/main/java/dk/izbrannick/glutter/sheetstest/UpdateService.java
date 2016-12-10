@@ -6,8 +6,6 @@ package dk.izbrannick.glutter.sheetstest;
 
 import android.support.v7.app.AppCompatActivity;
 
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;

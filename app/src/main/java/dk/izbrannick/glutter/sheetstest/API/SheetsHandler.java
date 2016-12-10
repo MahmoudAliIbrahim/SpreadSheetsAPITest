@@ -111,7 +111,7 @@ public class SheetsHandler {
         List<List<Object>> values = response.getValues();
         if (values != null) {
             for (List row : values) {
-
+                /*
                 Object o1,o2,o3,o4,o5, o6;
                 o1 = row.get(0);
                 o2 = row.get(1);
@@ -119,7 +119,7 @@ public class SheetsHandler {
                 o4 = row.get(3);
                 o5 = row.get(4);
                 o6 = row.get(5);
-
+                */
                 try {
                     MyContact myContact = new MyContact(row.get(0), row.get(1), row.get(2), row.get(3), row.get(4), row.get(5));
 
@@ -132,5 +132,31 @@ public class SheetsHandler {
             }
         }
         return myContacts;
+    }
+
+    /**
+     *
+     * @param spreadSheetId - create seperate Tab where you have all your groups listed
+     * @param range - is probably "Groups!A:A10" or something like that
+     * @return
+     * @throws IOException
+     */
+    public static List<Object> getGroupNames(String spreadSheetId, String range) throws IOException
+    {
+        List<Object> myGroups = new ArrayList<>();
+        ValueRange response = mService_.spreadsheets().values().get(spreadSheetId, range).execute();
+        List<List<Object>> values = response.getValues();
+        if (values != null) {
+            for (List row : values) {
+                try {
+                    myGroups.add(row.get(0));
+                }catch (Exception r)
+                {
+                    r.printStackTrace();
+                    return null;
+                }
+            }
+        }
+        return myGroups;
     }
 }

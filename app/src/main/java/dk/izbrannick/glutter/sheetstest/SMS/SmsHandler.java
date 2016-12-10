@@ -66,6 +66,7 @@ public class SmsHandler {
                 ArrayList<Object> values = new ArrayList<>();
                 values.add(message);
                 values.add(getCurrentTimeStamp());
+                //TODO: add current group sms is sent to
                 values.add(true);
 
                 SheetsHandler.appendValues(sheetId, "messages!A1:A", values);

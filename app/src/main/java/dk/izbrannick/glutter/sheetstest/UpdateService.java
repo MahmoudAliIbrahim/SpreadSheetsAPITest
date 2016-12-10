@@ -47,6 +47,13 @@ public class UpdateService extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
+                    // Update Groups
+                    try {
+                        StaticDB.myGroups_ = SheetsHandler.getAllGroups(sheetId, "Groups!A1:A99");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                     // Check for group message
                     if (!(groupMessage_.equalsIgnoreCase(groupMessageOld_))) {
                         groupMessageOld_ = groupMessage_;

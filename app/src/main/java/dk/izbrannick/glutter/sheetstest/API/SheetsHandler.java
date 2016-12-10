@@ -141,7 +141,7 @@ public class SheetsHandler {
      * @return
      * @throws IOException
      */
-    public static List<Object> getGroupNames(String spreadSheetId, String range) throws IOException
+    public static List<Object> getAllGroups(String spreadSheetId, String range) throws IOException
     {
         List<Object> myGroups = new ArrayList<>();
         ValueRange response = mService_.spreadsheets().values().get(spreadSheetId, range).execute();

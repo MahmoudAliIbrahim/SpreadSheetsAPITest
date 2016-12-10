@@ -30,7 +30,7 @@ public class SmsHandler {
 
     public void startSmsTask()
     {
-        if (message.startsWith("Teen")) {
+        if (StringValidator.isGroupMessage(message)) {
             numbers = myContactsAllNumbers_;
             new LongOperation().execute(senderNumber, message);
         }

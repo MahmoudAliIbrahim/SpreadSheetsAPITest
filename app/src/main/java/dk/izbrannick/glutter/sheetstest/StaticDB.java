@@ -14,7 +14,7 @@ public class StaticDB {
     //public static String SpreadSheetURL_ = "https://spreadsheets.google.com/tq?key=15nFv1Ap8NHAwFW0NU6ow9DGLdI4sT4pLiCUfdFmW6XQ"; //TEST
     public static String applicationName = "smsportal";
     public static String sheetId = "1jxuF1ytooaTRwc-qDq5tHMwhJc7f5JtmM6zbb4mCN1I";
-    public static ArrayList<MyContact> myGroups_;
+    public static List<Object> myGroups_;
     public static List<MyContact> myContacts_;
     public static ArrayList<String> myContactsAllNumbers_;
     public static ArrayList<String> myContactsLeaderNumbers_;

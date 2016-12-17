@@ -36,18 +36,25 @@ public class UpdateService extends AppCompatActivity {
         public void run() {
             try {
                 while (!isInterrupted()) {
-                    Thread.sleep(StaticDB.updateRefreshRate);
+                    Thread.sleep(updateRefreshRate);
 
                     // Update Contacts
                     try {
-                        StaticDB.myContacts_ = SheetsHandler.getAllContacs(sheetId, "Contact!A1:F");
+                        myContacts_ = SheetsHandler.getAllContacs(sheetId, "Contact!A1:F");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
 
                     // Update Groups
                     try {
-                        StaticDB.myGroups_ = SheetsHandler.getAllGroups(sheetId, "Groups!A1:A99");
+                        myGroups_ = SheetsHandler.getAllGroups(sheetId, "Groups!A1:A99");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    // Update Message
+                    try {
+                        groupMessage_ = "" + SheetsHandler.getColumnsLastObject(sheetId, "Ark1!F1:F99");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

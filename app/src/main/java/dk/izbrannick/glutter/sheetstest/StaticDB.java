@@ -9,11 +9,8 @@ import java.util.List;
  */
 
 public class StaticDB {
-    // teams - private String SpreadSheetURL_ = "https://spreadsheets.google.com/tq?key=15nFv1Ap8NHAwFW0NU6ow9DGLdI4sT4pLiCUfdFmW6XQ";
-    //private String SpreadSheetURL_ = "https://spreadsheets.google.com/tq?key=1552qHrDx3gS6S2LU8wuhFYZoIZE1oQJ_B18HBqTivEs";
-    //public static String SpreadSheetURL_ = "https://spreadsheets.google.com/tq?key=15nFv1Ap8NHAwFW0NU6ow9DGLdI4sT4pLiCUfdFmW6XQ"; //TEST
     public static String applicationName = "smsportal";
-    public static String sheetId = "1jxuF1ytooaTRwc-qDq5tHMwhJc7f5JtmM6zbb4mCN1I";
+    public static String sheetId = "1XWNq-rqnLot0JZztxzcgCG-Cny133Sb_Lawyh4Z8wig";
     public static List<Object> myGroups_;
     public static List<MyContact> myContacts_;
     public static ArrayList<String> myContactsAllNumbers_;

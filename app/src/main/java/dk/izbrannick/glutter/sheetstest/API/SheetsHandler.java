@@ -78,24 +78,23 @@ public class SheetsHandler {
 
     /**
      * Fetch a list of names and majors of students in a sample spreadsheet:
-     * https://docs.google.com/spreadsheets/d/1jxuF1ytooaTRwc-qDq5tHMwhJc7f5JtmM6zbb4mCN1I/edit
+     * https://docs.google.com/spreadsheets/................/edit
      * @return ArrayList<Object> with column[columnNumber]
      * @throws IOException
      * @param range example = "Contact!A1:F"
      */
-    public static List<Object> getColumnObjects(String spreadSheetId, String range, int columnNumber) throws IOException {
+    public static Object getColumnsLastObject(String spreadSheetId, String range) throws IOException {
 
-        List<Object> results = new ArrayList<>();
+        Object value = "";
         ValueRange response = mService_.spreadsheets().values().get(spreadSheetId, range).execute();
         List<List<Object>> values = response.getValues();
         if (values != null) {
             for (List row : values) {
-                results.add(row.get(columnNumber));
+                    value = row;
             }
         }
-        return results;
+        return value;
     }
-
 
     /**
      * Gets a list of objects of contacts from a spreadsheet:

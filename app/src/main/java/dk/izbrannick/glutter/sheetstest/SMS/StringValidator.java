@@ -63,12 +63,10 @@ public class StringValidator {
 
     public static boolean isGroupMessage(String message)
     {
-        groupNumbers = null;
         words = null;
         if (!message.isEmpty()) {
             String[] splitedMessage = message.split(" ");
             if (splitedMessage.length > 1) {
-                groupNumbers = new ArrayList<>();
                 words = new ArrayList<>();
                 for (int i = 0; i < splitedMessage.length; i++)
                     words.add(splitedMessage[i]);

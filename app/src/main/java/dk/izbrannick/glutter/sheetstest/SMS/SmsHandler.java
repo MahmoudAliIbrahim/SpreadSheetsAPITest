@@ -34,10 +34,6 @@ public class SmsHandler {
             numbers = myContactsAllNumbers_;
             new LongOperation().execute(senderNumber, message);
         }
-        if (message.startsWith("Leder")) {
-            numbers = myContactsLeaderNumbers_;
-            new LongOperation().execute(senderNumber, message);
-        }
     }
 
     private class LongOperation extends AsyncTask<String, Void, String> {

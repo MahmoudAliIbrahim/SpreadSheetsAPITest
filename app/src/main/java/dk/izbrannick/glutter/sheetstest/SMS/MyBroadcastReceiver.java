@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.widget.Toast;
 
+import dk.izbrannick.glutter.sheetstest.StaticDB;
+
 /**
  * Created by luther on 02/04/15.
  */
@@ -60,8 +62,9 @@ public class MyBroadcastReceiver extends android.content.BroadcastReceiver {
 
             if (!currMsg.equals(beskedOld)) {
 
-                        SmsHandler smsHandler = new SmsHandler(currMsg, currNr);
-                        smsHandler.startSmsTask();
+                StaticDB.groupMessage_ = currMsg;
+                // TODO: (0) to be tested with broadcast + sheets
+                StaticDB.currSenderNumber_ = currNr;
 
             }
 

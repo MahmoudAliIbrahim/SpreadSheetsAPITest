@@ -63,13 +63,7 @@ public class SmsHandler {
 
 
             try {
-                ArrayList<Object> values = new ArrayList<>();
-                values.add(message);
-                values.add(getCurrentTimeStamp());
-                //TODO: add current group sms is sent to
-                values.add(true);
-
-                SheetsHandler.appendValues(sheetId, "messages!A1:A", values);
+                SheetsHandler.appendValue(sheetId, "messages!A1:A", message);
             } catch (IndexOutOfBoundsException e) {
                 e.printStackTrace();
             } catch (Exception e) {

@@ -15,9 +15,11 @@ public class StaticDB {
     public static List<MyContact> myContacts_;
     public static ArrayList<String> myContactsAllNumbers_;
     public static ArrayList<String> myContactsLeaderNumbers_;
-    public static String groupMessage_;
-    public static String groupMessageOld_;
+    public static String groupMessage_ = "";
+    public static String groupMessageOld_ = "";
     public static com.google.api.services.sheets.v4.Sheets mService_ = null;
     public static String currentTime_;
     public static long updateRefreshRate = 10000;
+    // TODO: (1) to be tested with broadcast + sheets
+    public static String currSenderNumber_;
 }

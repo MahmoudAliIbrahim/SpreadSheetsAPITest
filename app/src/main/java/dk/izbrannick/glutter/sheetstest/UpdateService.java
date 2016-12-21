@@ -22,7 +22,7 @@ public class UpdateService extends AppCompatActivity {
      * This service keeps values in StaticDB updated. Every StaticDB.updateRefreshRate
      */
     UpdateService() {
-        currentTime_ = getCurrentTimeStamp();
+        currentTimeStamp_ = getCurrentTimeStamp();
 
         //Update repeatably
         t.start();
@@ -37,8 +37,17 @@ public class UpdateService extends AppCompatActivity {
                 while (!isInterrupted()) {
                     Thread.sleep(updateRefreshRate);
 
+                    //TODO: REMOVE -  tryout of getting all parameters from ( pmdb!A1:A99 )
+                    //Update all parameters
+                    try {
+                        SheetsHandler.getAllParameters(sheetId, "pmdb!A2:A99");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
                     //Update timestamp
-                    currentTime_ = getCurrentTimeStamp();
+                    currentTimeStamp_ = getCurrentTimeStamp();
 
                     // Update Contacts
                     try {

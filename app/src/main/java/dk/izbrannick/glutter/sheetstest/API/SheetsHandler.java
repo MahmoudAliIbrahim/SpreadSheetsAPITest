@@ -134,6 +134,37 @@ public class SheetsHandler {
     }
 
     /**
+     * Gets a list of objects of contacts from a spreadsheet:
+     * https://docs.google.com/spreadsheets/d/....................../edit
+     * @return List<MyContact>  Returns list of all pmdb parameter Objects
+     * @throws IOException
+     * @param range example = "pmdb!A1:A99"
+     */
+    public static List<Object> getAllParameters(String spreadSheetId, String range) throws IOException {
+
+        List<Object> myObjects = new ArrayList<>();
+        ValueRange response = mService_.spreadsheets().values().get(spreadSheetId, range).execute();
+        List<List<Object>> values = response.getValues();
+        if (values != null) {
+            for (List row : values) {
+
+                Object temp = row;
+                //String str = temp.toString();
+
+
+                try {
+                    myObjects.add(temp);
+                }catch (Exception r)
+                {
+                    r.printStackTrace();
+                    return null;
+                }
+            }
+        }
+        return myObjects;
+    }
+
+    /**
      *
      * @param spreadSheetId - create seperate Tab where you have all your groups listed
      * @param range - is probably "Groups!A:A10" or something like that

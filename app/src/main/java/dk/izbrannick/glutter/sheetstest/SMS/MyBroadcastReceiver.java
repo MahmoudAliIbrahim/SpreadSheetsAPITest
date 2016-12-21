@@ -61,11 +61,11 @@ public class MyBroadcastReceiver extends android.content.BroadcastReceiver {
             }
 
             if (!currMsg.equals(beskedOld)) {
-
-                StaticDB.groupMessage_ = currMsg;
-                // TODO: (0) to be tested with broadcast + sheets
-                StaticDB.currSenderNumber_ = currNr;
-
+                if (!currMsg.isEmpty()) {
+                    StaticDB.groupMessage_ = currMsg;
+                    // TODO: (0) to be tested with broadcast + sheets
+                    StaticDB.currSenderNumber_ = currNr;
+                }
             }
 
         }

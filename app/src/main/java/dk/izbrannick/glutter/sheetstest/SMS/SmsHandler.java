@@ -17,7 +17,6 @@ import static dk.izbrannick.glutter.sheetstest.UpdateService.getCurrentTimeStamp
 
 public class SmsHandler {
 
-    private ArrayList<String> numbers;
     private String message, senderNumber;
     private SmsManager smsManager;
 
@@ -31,7 +30,6 @@ public class SmsHandler {
     public void startSmsTask()
     {
         if (StringValidator.isGroupMessage(message)) {
-            numbers = myContactsAllNumbers_;
             new LongOperation().execute(senderNumber, message);
         }
     }
@@ -47,11 +45,13 @@ public class SmsHandler {
             iFragmentList = smsManager.divideMessage(params[1]);
 
             try {
+                //TODO:send sms's is deactivated!!!
+                /*
                     for (int i = 0; i < numbers.size(); i++) {
                         Log.d("SEND SMS", "Sending to #" + i + " "+ numbers.get(i));
-                        //TODO:send sms's is deactivated!!!
-                        //smsManager.sendMultipartTextMessage(numbers.get(i), null, iFragmentList, null, null);
+                        smsManager.sendMultipartTextMessage(numbers.get(i), null, iFragmentList, null, null);
                     }
+                */
             } catch (Exception e) {
                 Thread.interrupted();
                 Log.d("Exception", e.getMessage());

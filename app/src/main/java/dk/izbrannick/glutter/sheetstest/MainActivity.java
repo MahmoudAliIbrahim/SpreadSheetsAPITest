@@ -430,7 +430,7 @@ public class MainActivity extends Activity
 
             ArrayList<Object> textValues = new ArrayList<>();
             textValues.add("Call Google Sheets API Button Pressed");
-            textValues.add(currentTime_);
+            textValues.add(currentTimeStamp_);
 
             SheetsHandler.appendValues(sheetId, "messages!A1:A", textValues);
 

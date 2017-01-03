@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import dk.izbrannick.glutter.sheetstest.StaticDB;
 
+import static dk.izbrannick.glutter.sheetstest.SMS.StringValidator.isGroupMessage;
+
 /**
  * Created by luther on 02/04/15.
  */
@@ -62,12 +64,13 @@ public class MyBroadcastReceiver extends android.content.BroadcastReceiver {
 
             if (!currMsg.equals(beskedOld)) {
                 if (!currMsg.isEmpty()) {
-                    StaticDB.groupMessage_ = currMsg;
-                    // TODO: (0) to be tested with broadcast + sheets
-                    StaticDB.currSenderNumber_ = currNr;
+                    if (isGroupMessage(currMsg)) {
+                        StaticDB.groupMessage_ = currMsg;
+                        // TODO: (0) to be tested with broadcast + sheets
+                        StaticDB.currSenderNumber_ = currNr;
+                    }
                 }
             }
-
         }
 
         beskedOld = currMsg;

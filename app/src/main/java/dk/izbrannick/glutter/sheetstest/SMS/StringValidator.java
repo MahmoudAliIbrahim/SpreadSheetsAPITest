@@ -16,9 +16,6 @@ public class StringValidator {
     // [0]Signup [1]Group Name [2]Name
     public static ArrayList<String> words;
 
-    // array is filled if isGroupMessage() executed | else NULL
-    public static ArrayList<String> groupNumbers;
-
     public static String signup;
     public static String resign;
 

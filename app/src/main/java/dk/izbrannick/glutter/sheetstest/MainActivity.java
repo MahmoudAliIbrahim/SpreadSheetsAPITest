@@ -519,7 +519,12 @@ public class MainActivity extends Activity
                         @Override
                         public void run() {
                             // update here!
-                            mOutputText.setText(TextUtils.join("\n", myContacts_));
+                            try {
+                                mOutputText.setText(TextUtils.join("\n", myContacts_));
+                            }catch (Exception r)
+                            {
+                                mOutputText.setText(" ... :(( - Øv bøv");
+                            }
                         }
                     });
 

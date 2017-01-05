@@ -8,7 +8,7 @@ import java.util.List;
  */
 
 public class StaticDB {
-    public static String applicationName = "smsportal";
+    public static String applicationName_ = "smsportal";
     public static String sheetId = "1XWNq-rqnLot0JZztxzcgCG-Cny133Sb_Lawyh4Z8wig";
     public static List<MyGroup> myGroups_;
     public static List<MyContact> myContacts_;
@@ -20,6 +20,6 @@ public class StaticDB {
     // TODO: (1) to be tested with broadcast + sheets
     public static String currSenderNumber_;
     public static String contactsSheetRange = "Contact!A2:H";
-    public static String pmdbSheetRange = "pmdb!A2:A99";
+    public static String pmdbSheetRange = "pmdb!A2:C99";
     public static String groupsSheetRange = "Groups!A1:A99";
 }

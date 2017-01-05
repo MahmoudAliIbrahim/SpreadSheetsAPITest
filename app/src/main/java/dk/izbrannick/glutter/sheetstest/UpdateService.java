@@ -78,7 +78,7 @@ public class UpdateService extends IntentService implements Runnable{
             //TODO: REMOVE -  tryout of getting all parameters from ( pmdb!A1:A99 )
             // -- Update all parameters
             try {
-                SheetsHandler.getAllParameters(sheetId, pmdbSheetRange);
+                SheetsHandler.updateParametersInStaticDB(sheetId, pmdbSheetRange);
             } catch (IOException e) {
                 e.printStackTrace();
             }

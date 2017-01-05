@@ -11,7 +11,7 @@ import dk.izbrannick.glutter.sheetstest.MyGroup;
 import dk.izbrannick.glutter.sheetstest.StaticDB;
 import dk.izbrannick.glutter.sheetstest.MyContact;
 
-import static dk.izbrannick.glutter.sheetstest.StaticDB.mService_;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.*;
 
 /**
  * Created by u321424 on 07-12-2016.
@@ -149,28 +149,39 @@ public class SheetsHandler {
      * @throws IOException
      * @param range example = "pmdb!A1:A99"
      */
-    public static List<Object> getAllParameters(String spreadSheetId, String range) throws IOException {
+    public static List<Object> updateParametersInStaticDB(String spreadSheetId, String range) throws IOException {
 
-        List<Object> myObjects = new ArrayList<>();
         ValueRange response = mService_.spreadsheets().values().get(spreadSheetId, range).execute();
         List<List<Object>> values = response.getValues();
+
+        List<Object> prameterValues = new ArrayList<>();
+
         if (values != null) {
             for (List row : values) {
 
-                Object temp = row;
-                //String str = temp.toString();
-
-
                 try {
-                    myObjects.add(temp);
+                    Object pmName = row.get(0);
+                    Object pmValue = row.get(1);
+                    if (!pmValue.toString().isEmpty()) {
+                        if (pmName.toString().equals("applicationName_"))
+                            applicationName_ = pmValue.toString();
+                        if (pmName.toString().equals("groupMessage_"))
+                            groupMessage_ = pmValue.toString();
+                        if (pmName.toString().equals("groupMessageOld_"))
+                            groupMessageOld_ = pmValue.toString();
+                        if (pmName.toString().equals("currentTimeStamp_"))
+                            currentTimeStamp_ = pmValue.toString();
+                        if (pmName.toString().equals("updateRefreshRate_"))
+                            updateRefreshRate = Long.valueOf((String) pmValue);
+                        if (pmName.toString().equals("currSenderNumber_"))
+                            currSenderNumber_ = pmValue.toString();
+                    }
                 }catch (Exception r)
                 {
-                    r.printStackTrace();
-                    return null;
                 }
             }
         }
-        return myObjects;
+        return prameterValues;
     }
 
     /**

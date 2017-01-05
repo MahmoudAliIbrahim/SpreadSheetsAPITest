@@ -26,6 +26,7 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -54,7 +55,9 @@ public class MainActivity extends Activity
     GoogleAccountCredential mCredential;
     private TextView mOutputText;
     private Button mCallApiButton;
+    private Intent mServiceIntent;
     ProgressDialog mProgress;
+    Context context;
 
     static final int REQUEST_ACCOUNT_PICKER = 1000;
     static final int REQUEST_AUTHORIZATION = 1001;
@@ -119,6 +122,9 @@ public class MainActivity extends Activity
                 .setBackOff(new ExponentialBackOff());
 
         checkPermissions();
+
+        context = this;
+        mServiceIntent = new Intent(context, UpdateService.class);
 
     }
 
@@ -473,7 +479,16 @@ public class MainActivity extends Activity
                 output.add(0, "Data retrieved using the Google Sheets API:");
                 mOutputText.setText(TextUtils.join("\n", output));
 
-                UpdateService.startUpdating();
+
+                /*
+                new Intent(getActivity(), RSSPullService.class)
+                           .setData(Uri.parse(PICASA_RSS_URL));
+                 */
+
+                startService(mServiceIntent);
+
+
+
             }
         }
 
@@ -497,5 +512,11 @@ public class MainActivity extends Activity
                 mOutputText.setText("Request cancelled.");
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        stopService(mServiceIntent);
     }
 }

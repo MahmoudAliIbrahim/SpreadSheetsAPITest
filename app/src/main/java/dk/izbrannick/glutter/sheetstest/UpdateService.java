@@ -5,6 +5,8 @@ package dk.izbrannick.glutter.sheetstest;
  */
 
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -21,21 +23,22 @@ public class UpdateService extends AppCompatActivity {
     /**
      * This service keeps values in StaticDB updated. Every StaticDB.updateRefreshRate
      */
-    UpdateService() {
+    public static void startUpdating()
+    {
         currentTimeStamp_ = getCurrentTimeStamp();
-
         //Update repeatably
         t.start();
-
     }
 
-    Thread t = new Thread() {
+    static Thread t = new Thread() {
 
         @Override
         public void run() {
             try {
                 while (!isInterrupted()) {
                     Thread.sleep(updateRefreshRate);
+
+                    Log.i("Update Service", "Updating....");
 
                     //TODO: REMOVE -  tryout of getting all parameters from ( pmdb!A1:A99 )
                     // -- Update all parameters

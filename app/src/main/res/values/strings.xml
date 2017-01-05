@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">SheetsTest</string>
+    <string name="default_name">Name</string>
+    <string name="default_phone">77889944</string>
+    <string name="default_email">email@email.com</string>
+    <string name="default_credit">0</string>
+    <string name="default_groups_participating">NONE</string>
 </resources>

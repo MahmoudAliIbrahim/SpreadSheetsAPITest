@@ -115,7 +115,6 @@ public class SheetsHandler {
 
                     ArrayList<Object> groups = new ArrayList<>();
 
-
                     for (int i = 4; i <= 7; i++)
                     {
                         try {
@@ -129,7 +128,6 @@ public class SheetsHandler {
                             break;
                         }
                     }
-
 
                     MyContact myContact = new MyContact(row.get(0), row.get(1), row.get(2), row.get(3), groups);
 

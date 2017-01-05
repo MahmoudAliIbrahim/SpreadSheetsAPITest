@@ -38,13 +38,13 @@ public class MyContactsAdapter extends ArrayAdapter<MyContact> {
         if (o != null) {
             TextView name = (TextView) v.findViewById(R.id.name);
             TextView numberPrimary = (TextView) v.findViewById(R.id.numberPrimary);
-            TextView isOnRecipientList = (TextView) v.findViewById(R.id.isOnRecipientList);
-            TextView numberOther = (TextView) v.findViewById(R.id.numberOther);
+            TextView groupsParticipatingIn = (TextView) v.findViewById(R.id.groupsParticipatingIn);
+            TextView email = (TextView) v.findViewById(R.id.email);
 
             name.setText(o.getName());
             numberPrimary.setText(o.getNumberPrimary());
-            isOnRecipientList.setText( "ZZZ"  ); //String.valueOf(o.getGroups())
-            numberOther.setText("getNumberOther()!");
+            groupsParticipatingIn.setText( o.getGroups().toString()  ); //String.valueOf(o.getGroups())
+            email.setText("getNumberOther()!");
         }
         return v;
     }

@@ -6,28 +6,28 @@
 
     <TextView
         android:id="@+id/name"
-        android:text="Preston North End"
+        android:text="@string/default_name"
         android:layout_width="0dp"
         android:layout_weight="0.18"
         android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/numberPrimary"
-        android:text="18"
+        android:text="@string/default_phone"
         android:layout_width="0dp"
         android:layout_weight=".10"
         android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/isOnRecipientList"
-        android:text="4"
+        android:id="@+id/groupsParticipatingIn"
+        android:text="@string/default_groups_participating"
         android:layout_width="0dp"
         android:layout_weight=".10"
         android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/numberOther"
-        android:text="0"
+        android:id="@+id/email"
+        android:text="@string/default_email"
         android:layout_width="0dp"
         android:layout_weight=".10"
         android:layout_height="wrap_content" />

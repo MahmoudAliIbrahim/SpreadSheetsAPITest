@@ -411,8 +411,6 @@ public class MainActivity extends Activity
         protected List<String> doInBackground(Void... params) {
             try {
                 return getAndAppend();
-                //return appendSheetApi();
-                //return getDataFromApi();
             } catch (Exception e) {
                 mLastError = e;
                 cancel(true);
@@ -450,7 +448,7 @@ public class MainActivity extends Activity
             List<String> contacsInfo = new ArrayList<>();
 
             for (MyContact c : contacs) {
-                contacsInfo.add( c.getName() + " - " + c.getCredit() );
+                contacsInfo.add( c.getName() + "  " + c.getGroups() );
             }
             return contacsInfo;
         }
@@ -474,7 +472,8 @@ public class MainActivity extends Activity
             } else {
                 output.add(0, "Data retrieved using the Google Sheets API:");
                 mOutputText.setText(TextUtils.join("\n", output));
-                UpdateService updateService = new UpdateService();
+
+                UpdateService.startUpdating();
             }
         }
 

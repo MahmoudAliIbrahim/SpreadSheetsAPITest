@@ -43,8 +43,8 @@ public class MyContactsAdapter extends ArrayAdapter<MyContact> {
 
             name.setText(o.getName());
             numberPrimary.setText(o.getNumberPrimary());
-            isOnRecipientList.setText(String.valueOf(o.getOnRecipientList()));
-            numberOther.setText(o.getNumberOther());
+            isOnRecipientList.setText( "ZZZ"  ); //String.valueOf(o.getGroups())
+            numberOther.setText("getNumberOther()!");
         }
         return v;
     }

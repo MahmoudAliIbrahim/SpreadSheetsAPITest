@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dk.izbrannick.glutter.sheetstest.MyGroup;
 import dk.izbrannick.glutter.sheetstest.StaticDB;
 import dk.izbrannick.glutter.sheetstest.MyContact;
 
@@ -101,7 +102,7 @@ public class SheetsHandler {
      * https://docs.google.com/spreadsheets/d/....................../edit
      * @return List<MyContact> list of all contacts
      * @throws IOException
-     * @param range example = "Contact!A1:F"
+     * @param range example = "Contact!A2:F"
      */
     public static List<MyContact> getAllContacs(String spreadSheetId, String range) throws IOException {
 
@@ -110,17 +111,27 @@ public class SheetsHandler {
         List<List<Object>> values = response.getValues();
         if (values != null) {
             for (List row : values) {
-                /*
-                Object o1,o2,o3,o4,o5, o6;
-                o1 = row.get(0);
-                o2 = row.get(1);
-                o3 = row.get(2);
-                o4 = row.get(3);
-                o5 = row.get(4);
-                o6 = row.get(5);
-                */
                 try {
-                    MyContact myContact = new MyContact(row.get(0), row.get(1), row.get(2), row.get(3), row.get(4), row.get(5));
+
+                    ArrayList<Object> groups = new ArrayList<>();
+
+
+                    for (int i = 4; i <= 7; i++)
+                    {
+                        try {
+                            Object o = row.get(i);
+                            if (!o.toString().isEmpty())
+                            {
+                                groups.add(o);
+                            }
+                        }catch (Exception r)
+                        {
+                            break;
+                        }
+                    }
+
+
+                    MyContact myContact = new MyContact(row.get(0), row.get(1), row.get(2), row.get(3), groups);
 
                     myContacts.add(myContact);
                 }catch (Exception r)
@@ -166,20 +177,22 @@ public class SheetsHandler {
 
     /**
      *
-     * @param spreadSheetId - create seperate Tab where you have all your groups listed
+     * @param spreadSheetId - gets from separate Tab where you have all your groups listed
      * @param range - is probably "Groups!A:A10" or something like that
      * @return
      * @throws IOException
      */
-    public static List<Object> getAllGroups(String spreadSheetId, String range) throws IOException
+    public static List<MyGroup> getAllGroups(String spreadSheetId, String range) throws IOException
     {
-        List<Object> myGroups = new ArrayList<>();
+        List<MyGroup> myGroups = new ArrayList<>();
         ValueRange response = mService_.spreadsheets().values().get(spreadSheetId, range).execute();
         List<List<Object>> values = response.getValues();
         if (values != null) {
             for (List row : values) {
                 try {
-                    myGroups.add(row.get(0));
+                    //myGroups.add(row.get(0));
+                    MyGroup gr = new MyGroup((String) row.get(0));
+                    myGroups.add(gr);
                 }catch (Exception r)
                 {
                     r.printStackTrace();

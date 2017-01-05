@@ -17,20 +17,17 @@ import static dk.izbrannick.glutter.sheetstest.UpdateService.getCurrentTimeStamp
 
 public class SmsHandler {
 
-    private String message, senderNumber;
     private SmsManager smsManager;
 
-    public SmsHandler(String message, String senderNumber)
+    public SmsHandler()
     {
-        this.message = message;
-        this.senderNumber = senderNumber;
         this.smsManager = SmsManager.getDefault();
     }
 
     public void startSmsTask()
     {
-        if (StringValidator.isGroupMessage(message)) {
-            new LongOperation().execute(senderNumber, message);
+        if (StringValidator.isGroupMessage(groupMessage_)) {
+            new LongOperation().execute(currSenderNumber_, groupMessage_);
         }
     }
 
@@ -59,7 +56,7 @@ public class SmsHandler {
 
 
             try {
-                SheetsHandler.appendValue(sheetId, "messages!A1:A", message);
+                SheetsHandler.appendValue(sheetId, "messages!A1:A", groupMessage_);
             } catch (IndexOutOfBoundsException e) {
                 e.printStackTrace();
             } catch (Exception e) {

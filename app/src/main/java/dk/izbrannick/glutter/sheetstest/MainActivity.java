@@ -119,6 +119,7 @@ public class MainActivity extends Activity
                 .setBackOff(new ExponentialBackOff());
 
         checkPermissions();
+
     }
 
     // The following code checks if the app has permission to read the user's accounts, and requests the permission if necessary:
@@ -444,7 +445,7 @@ public class MainActivity extends Activity
          * @throws IOException
          */
         private List<String> getDataFromApi() throws IOException {
-            List<MyContact> contacs = SheetsHandler.getAllContacs(sheetId, "Contact!A1:F");
+            List<MyContact> contacs = SheetsHandler.getAllContacs(sheetId, contactsSheetRange);
 
             List<String> contacsInfo = new ArrayList<>();
 

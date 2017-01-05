@@ -38,27 +38,28 @@ public class UpdateService extends AppCompatActivity {
                     Thread.sleep(updateRefreshRate);
 
                     //TODO: REMOVE -  tryout of getting all parameters from ( pmdb!A1:A99 )
-                    //Update all parameters
+                    // -- Update all parameters
                     try {
-                        SheetsHandler.getAllParameters(sheetId, "pmdb!A2:A99");
+                        SheetsHandler.getAllParameters(sheetId, pmdbSheetRange);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
 
 
-                    //Update timestamp
+                    // -- Update timestamp
                     currentTimeStamp_ = getCurrentTimeStamp();
 
-                    // Update Contacts
+                    // -- Update Contacts
                     try {
-                        myContacts_ = SheetsHandler.getAllContacs(sheetId, "Contact!A1:F");
+                        myContacts_ = SheetsHandler.getAllContacs(sheetId, contactsSheetRange);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
 
-                    // Update Groups
+                    // -- Update Groups
+                    //    1 - Create groups
                     try {
-                        myGroups_ = SheetsHandler.getAllGroups(sheetId, "Groups!A1:A99");
+                        myGroups_ = SheetsHandler.getAllGroups(sheetId, groupsSheetRange);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -67,7 +68,7 @@ public class UpdateService extends AppCompatActivity {
                     if (!(groupMessage_.equalsIgnoreCase(groupMessageOld_))) {
                         groupMessageOld_ = groupMessage_;
                         if (StringValidator.isGroupMessage(groupMessage_)) {
-                            SmsHandler smsHandler = new SmsHandler(groupMessage_, "from sheet");
+                            SmsHandler smsHandler = new SmsHandler();
                             smsHandler.startSmsTask();
                         }
                     }
@@ -75,7 +76,7 @@ public class UpdateService extends AppCompatActivity {
 
                     // Update Message
                     try {
-                        groupMessage_ = "" + SheetsHandler.getColumnsLastObject(sheetId, "Ark1!F1:F99");
+                        groupMessage_ = "" + SheetsHandler.getColumnsLastObject(sheetId, groupsSheetRange);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

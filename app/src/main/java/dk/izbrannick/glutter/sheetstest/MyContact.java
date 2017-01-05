@@ -8,27 +8,20 @@ import java.util.ArrayList;
 
 public class MyContact {
     private String name, numberPrimary, email, credit;
-    private boolean isOnRecipientList;
-    private ArrayList<String> groups;
+    private ArrayList<Object> groups;
 
-    public MyContact(String name, String numberPrimary, boolean isOnRecipientList, String email, ArrayList<String> groups, String credit) {
-
-        this.setName(name);
-        this.setNumberPrimary(numberPrimary);
-        this.setNumberOther(email);
-        this.setOnRecipientList(isOnRecipientList);
-        this.setGroups(groups);
-        this.credit = credit;
-    }
-
-    public MyContact(Object name, Object numberPrimary, Object isOnRecipientList, Object email, Object groups, Object credit) {
+    public MyContact(Object name, Object numberPrimary, Object email, Object credit, ArrayList<Object> groups) {
 
         this.setName(String.valueOf(name));
         this.setNumberPrimary(String.valueOf(numberPrimary));
         this.setNumberOther(String.valueOf(email));
-        this.setOnRecipientList(Boolean.valueOf(String.valueOf(isOnRecipientList)));
-        this.setGroups(groups);
+
         this.setCredit(String.valueOf(credit));
+
+        this.groups = new ArrayList<>();
+        this.groups = groups;
+
+
     }
 
     public String getName() {
@@ -45,14 +38,6 @@ public class MyContact {
 
     public void setNumberPrimary(String numberPrimary) {
         this.numberPrimary = numberPrimary;
-    }
-
-    public boolean getOnRecipientList() {
-        return isOnRecipientList;
-    }
-
-    public void setOnRecipientList(boolean onRecipientList) {
-        this.isOnRecipientList = onRecipientList;
     }
 
     public String getNumberOther() {
@@ -72,26 +57,13 @@ public class MyContact {
         this.credit = credit;
     }
 
-    public ArrayList<String> getGroups() {
+    public ArrayList<Object> getGroups() {
         return groups;
     }
 
-    public void setGroups(ArrayList<String> groups) {
+    public void setGroups(ArrayList<Object> groups) {
         //TODO: find out if this is needed
         this.groups = new ArrayList<>();
         this.groups = groups;
-    }
-
-    public void setGroups(Object groups) {
-        //TODO: find out if this is needed
-        this.groups = new ArrayList<>();
-
-        String groupsString = (String) groups;
-        if (groupsString.contains(","))
-        {
-            for (int i =  0; i < groupsString.split(",").length; i++) {
-                this.groups.add(groupsString.split(",")[i]);
-            }
-        }
     }
 }

@@ -171,8 +171,14 @@ public class SheetsHandler {
                             groupMessageOld_ = pmValue.toString();
                         if (pmName.toString().equals("currentTimeStamp_"))
                             currentTimeStamp_ = pmValue.toString();
-                        if (pmName.toString().equals("updateRefreshRate_"))
-                            updateRefreshRate = Long.valueOf((String) pmValue);
+                        if (pmName.toString().equals("enableUpdateUI_"))
+                            enableUpdateUI_ = Boolean.valueOf(pmValue.toString());
+                        if (pmName.toString().equals("enableUpdateData_"))
+                            enableUpdateData_ = Boolean.valueOf(pmValue.toString());
+                        if (pmName.toString().equals("updateUIRefreshRate_"))
+                            updateUIRefreshRate_ = Long.valueOf((String) pmValue);
+                        if (pmName.toString().equals("updateDataRefreshRate_"))
+                            updateDataRefreshRate_ = Long.valueOf((String) pmValue);
                         if (pmName.toString().equals("currSenderNumber_"))
                             currSenderNumber_ = pmValue.toString();
                     }

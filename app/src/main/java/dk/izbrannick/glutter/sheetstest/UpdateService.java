@@ -20,11 +20,10 @@ import dk.izbrannick.glutter.sheetstest.API.SheetsHandler;
 import dk.izbrannick.glutter.sheetstest.SMS.SmsHandler;
 import dk.izbrannick.glutter.sheetstest.SMS.StringValidator;
 
+import static dk.izbrannick.glutter.sheetstest.MainActivity.mOutputText;
 import static dk.izbrannick.glutter.sheetstest.StaticDB.*;
 
 public class UpdateService extends IntentService implements Runnable{
-
-    private boolean permissionGranted;
 
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
@@ -39,11 +38,11 @@ public class UpdateService extends IntentService implements Runnable{
      */
     public void startUpdating()
     {
-        permissionGranted = true;
+        enableUpdateData_ = true;
     }
     public void stopUpdating()
     {
-        permissionGranted = false;
+        enableUpdateData_ = false;
     }
 
     @Override
@@ -54,21 +53,27 @@ public class UpdateService extends IntentService implements Runnable{
     @Override
     public void onCreate() {
         super.onCreate();
-        permissionGranted = true;
+        enableUpdateData_ = true;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        permissionGranted = false;
+        enableUpdateData_ = false;
+    }
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return super.onBind(intent);
     }
 
     @Override
     public void run() {
 
-        while (permissionGranted) {
+        while (enableUpdateData_) {
             try {
-                Thread.sleep(updateRefreshRate);
+                Thread.sleep(updateDataRefreshRate_);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

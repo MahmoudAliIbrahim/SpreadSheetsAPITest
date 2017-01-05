@@ -32,6 +32,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -52,7 +53,7 @@ import static dk.izbrannick.glutter.sheetstest.StaticDB.*;
 public class MainActivity extends Activity
         implements EasyPermissions.PermissionCallbacks {
     GoogleAccountCredential mCredential;
-    private TextView mOutputText;
+    public static TextView mOutputText;
     private Button mCallApiButton;
     private Intent mServiceIntent;
     ProgressDialog mProgress;
@@ -478,16 +479,8 @@ public class MainActivity extends Activity
                 output.add(0, "Data retrieved using the Google Sheets API:");
                 mOutputText.setText(TextUtils.join("\n", output));
 
-
-                /*
-                new Intent(getActivity(), RSSPullService.class)
-                           .setData(Uri.parse(PICASA_RSS_URL));
-                 */
-
                 startService(mServiceIntent);
-
-
-
+                uiUpdateThread.start();
             }
         }
 
@@ -512,6 +505,29 @@ public class MainActivity extends Activity
             }
         }
     }
+
+    Thread uiUpdateThread = new Thread() {
+
+        @Override
+        public void run() {
+            try {
+                while (enableUpdateUI_) {
+                    Thread.sleep(updateUIRefreshRate_);
+                    Log.i("Update Service", "Updating....UI");
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            // update here!
+                            mOutputText.setText(TextUtils.join("\n", myContacts_));
+                        }
+                    });
+
+                }
+            } catch (InterruptedException e) {
+            }
+        }
+    };
 
     @Override
     public void onBackPressed() {

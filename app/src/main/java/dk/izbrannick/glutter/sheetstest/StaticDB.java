@@ -16,7 +16,10 @@ public class StaticDB {
     public static String groupMessageOld_ = "";
     public static com.google.api.services.sheets.v4.Sheets mService_ = null;
     public static String currentTimeStamp_;
-    public static long updateRefreshRate = 2000; /// synchronizes with sheets - refresh rate
+    public static boolean enableUpdateUI_ = true;
+    public static boolean enableUpdateData_ = true;
+    public static long updateUIRefreshRate_ = 3000; /// synchronizes with sheets - refresh rate
+    public static long updateDataRefreshRate_ = 2000; /// synchronizes with sheets - refresh rate
     // TODO: (1) to be tested with broadcast + sheets
     public static String currSenderNumber_;
     public static String contactsSheetRange = "Contact!A2:H";

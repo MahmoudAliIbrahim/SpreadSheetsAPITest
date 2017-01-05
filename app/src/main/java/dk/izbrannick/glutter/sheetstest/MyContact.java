@@ -66,4 +66,9 @@ public class MyContact {
         this.groups = new ArrayList<>();
         this.groups = groups;
     }
+
+    @Override
+    public String toString() {
+        return name + " " + groups;
+    }
 }

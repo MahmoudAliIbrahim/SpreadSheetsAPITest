@@ -1,19 +1,5 @@
 package dk.izbrannick.glutter.sheetstest;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException;
-import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
-
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.util.ExponentialBackOff;
-
-import com.google.api.services.sheets.v4.SheetsScopes;
-
 import android.Manifest;
 import android.accounts.AccountManager;
 import android.app.Activity;
@@ -39,6 +25,18 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException;
+import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.ExponentialBackOff;
+import com.google.api.services.sheets.v4.SheetsScopes;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,7 +46,14 @@ import dk.izbrannick.glutter.sheetstest.API.SheetsHandler;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
-import static dk.izbrannick.glutter.sheetstest.StaticDB.*;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.applicationName_;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.contactsSheetRange;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.currentTimeStamp_;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.enableUpdateUI_;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.mService_;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.myContacts_;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.sheetId;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.updateUIRefreshRate_;
 
 public class MainActivity extends Activity
         implements EasyPermissions.PermissionCallbacks {
@@ -512,22 +517,23 @@ public class MainActivity extends Activity
         public void run() {
             try {
                 while (enableUpdateUI_) {
-                    Thread.sleep(updateUIRefreshRate_);
+
                     Log.i("Update Service", "Updating....UI");
 
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            // update here!
-                            try {
-                                mOutputText.setText(TextUtils.join("\n", myContacts_));
-                            }catch (Exception r)
-                            {
-                                mOutputText.setText(" ... :(( - Øv bøv");
+                            if (myContacts_ != null) {
+                                // update here!
+                                try {
+                                    mOutputText.setText(TextUtils.join("\n", myContacts_));
+                                } catch (Exception r) {
+                                    mOutputText.setText(" ... :(( - Øv bøv");
+                                }
                             }
                         }
                     });
-
+                    Thread.sleep(updateUIRefreshRate_);
                 }
             } catch (InterruptedException e) {
             }

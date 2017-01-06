@@ -129,7 +129,28 @@ public class SheetsHandler {
                         }
                     }
 
-                    MyContact myContact = new MyContact(row.get(0), row.get(1), row.get(2), row.get(3), groups);
+                    Object phone = "0";
+                    try {
+                        phone = row.get(1);
+                    }catch (Exception f)
+                    {
+                    }
+
+                    Object mail = "0";
+                    try {
+                        mail = row.get(2);
+                    }catch (Exception f)
+                    {
+                    }
+
+                    Object credit = "0";
+                    try {
+                        credit = row.get(3);
+                    }catch (Exception f)
+                    {
+                    }
+
+                    MyContact myContact = new MyContact(row.get(0), phone, mail, credit , groups);
 
                     myContacts.add(myContact);
                 }catch (Exception r)

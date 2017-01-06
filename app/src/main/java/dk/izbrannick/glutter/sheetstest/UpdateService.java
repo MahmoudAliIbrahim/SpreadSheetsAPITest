@@ -6,11 +6,7 @@ package dk.izbrannick.glutter.sheetstest;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.os.IBinder;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -20,8 +16,17 @@ import dk.izbrannick.glutter.sheetstest.API.SheetsHandler;
 import dk.izbrannick.glutter.sheetstest.SMS.SmsHandler;
 import dk.izbrannick.glutter.sheetstest.SMS.StringValidator;
 
-import static dk.izbrannick.glutter.sheetstest.MainActivity.mOutputText;
-import static dk.izbrannick.glutter.sheetstest.StaticDB.*;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.contactsSheetRange;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.currentTimeStamp_;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.enableUpdateData_;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.groupMessageOld_;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.groupMessage_;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.groupsSheetRange;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.myContacts_;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.myGroups_;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.pmdbSheetRange;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.sheetId;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.updateDataRefreshRate_;
 
 public class UpdateService extends IntentService implements Runnable{
 
@@ -62,21 +67,10 @@ public class UpdateService extends IntentService implements Runnable{
         enableUpdateData_ = false;
     }
 
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        return super.onBind(intent);
-    }
-
     @Override
     public void run() {
 
         while (enableUpdateData_) {
-            try {
-                Thread.sleep(updateDataRefreshRate_);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
 
             Log.i("Update Service", "Updating....from.....onHandleIntent.......");
 
@@ -134,6 +128,11 @@ public class UpdateService extends IntentService implements Runnable{
                         }
                     });
                     */
+            try {
+                Thread.sleep(updateDataRefreshRate_);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 

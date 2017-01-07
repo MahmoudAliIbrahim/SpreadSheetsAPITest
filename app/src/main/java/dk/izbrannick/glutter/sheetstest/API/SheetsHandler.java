@@ -70,7 +70,7 @@ public class SheetsHandler {
      * | value || timestamp |
      * @return AppendValuesResponse
      */
-    public static void deleteValue(String sheetId, String range, String value)
+    public static void deleteValue(String sheetId, String range)
     {
         ClearValuesRequest clear = new ClearValuesRequest();
 

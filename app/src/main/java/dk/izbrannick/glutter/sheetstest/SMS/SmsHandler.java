@@ -69,7 +69,7 @@ public class SmsHandler {
             // ------ DELETE
             try {
                 // -------- Delete message
-                SheetsHandler.deleteValue(sheetId, messagesSheetRange, "");
+                SheetsHandler.deleteValue(sheetId, messagesSheetRange);
             } catch (IndexOutOfBoundsException e) {
                 e.printStackTrace();
             } catch (Exception e) {

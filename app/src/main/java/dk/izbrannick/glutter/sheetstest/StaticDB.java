@@ -25,4 +25,6 @@ public class StaticDB {
     public static String contactsSheetRange = "Contact!A2:H";
     public static String pmdbSheetRange = "pmdb!A2:C99";
     public static String groupsSheetRange = "Groups!A1:A99";
+    public static String messagesSheetRange = "SendMessage!B2:B";
+    public static String selectedGroupForGroupMessageSheetRange = "SendMessage!A2:A";
 }

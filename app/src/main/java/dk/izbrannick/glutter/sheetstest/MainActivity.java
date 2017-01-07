@@ -46,14 +46,7 @@ import dk.izbrannick.glutter.sheetstest.API.SheetsHandler;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
-import static dk.izbrannick.glutter.sheetstest.StaticDB.applicationName_;
-import static dk.izbrannick.glutter.sheetstest.StaticDB.contactsSheetRange;
-import static dk.izbrannick.glutter.sheetstest.StaticDB.currentTimeStamp_;
-import static dk.izbrannick.glutter.sheetstest.StaticDB.enableUpdateUI_;
-import static dk.izbrannick.glutter.sheetstest.StaticDB.mService_;
-import static dk.izbrannick.glutter.sheetstest.StaticDB.myContacts_;
-import static dk.izbrannick.glutter.sheetstest.StaticDB.sheetId;
-import static dk.izbrannick.glutter.sheetstest.StaticDB.updateUIRefreshRate_;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.*;
 
 public class MainActivity extends Activity
         implements EasyPermissions.PermissionCallbacks {
@@ -438,12 +431,15 @@ public class MainActivity extends Activity
          */
         public List<String> appendSheetApi() throws IOException {
 
+            groupMessage_ = "Call Google Sheets API Button Pressed";
+
+            /*
             ArrayList<Object> textValues = new ArrayList<>();
             textValues.add("Call Google Sheets API Button Pressed");
             textValues.add(currentTimeStamp_);
 
             SheetsHandler.appendValues(sheetId, "messages!A1:A", textValues);
-
+            */
             return null;
         }
 

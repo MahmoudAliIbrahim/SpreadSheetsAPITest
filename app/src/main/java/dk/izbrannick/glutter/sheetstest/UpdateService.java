@@ -16,17 +16,7 @@ import dk.izbrannick.glutter.sheetstest.API.SheetsHandler;
 import dk.izbrannick.glutter.sheetstest.SMS.SmsHandler;
 import dk.izbrannick.glutter.sheetstest.SMS.StringValidator;
 
-import static dk.izbrannick.glutter.sheetstest.StaticDB.contactsSheetRange;
-import static dk.izbrannick.glutter.sheetstest.StaticDB.currentTimeStamp_;
-import static dk.izbrannick.glutter.sheetstest.StaticDB.enableUpdateData_;
-import static dk.izbrannick.glutter.sheetstest.StaticDB.groupMessageOld_;
-import static dk.izbrannick.glutter.sheetstest.StaticDB.groupMessage_;
-import static dk.izbrannick.glutter.sheetstest.StaticDB.groupsSheetRange;
-import static dk.izbrannick.glutter.sheetstest.StaticDB.myContacts_;
-import static dk.izbrannick.glutter.sheetstest.StaticDB.myGroups_;
-import static dk.izbrannick.glutter.sheetstest.StaticDB.pmdbSheetRange;
-import static dk.izbrannick.glutter.sheetstest.StaticDB.sheetId;
-import static dk.izbrannick.glutter.sheetstest.StaticDB.updateDataRefreshRate_;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.*;
 
 public class UpdateService extends IntentService implements Runnable{
 
@@ -101,9 +91,14 @@ public class UpdateService extends IntentService implements Runnable{
                 e.printStackTrace();
             }
 
-            // Update Message
+            // Update Message From Sheets
             try {
-                groupMessage_ = "" + SheetsHandler.getColumnsLastObject(sheetId, groupsSheetRange);
+                String selectedGroup = SheetsHandler.getColumnsLastObject(sheetId, selectedGroupForGroupMessageSheetRange).toString();
+                String msg = SheetsHandler.getColumnsLastObject(sheetId, messagesSheetRange).toString();
+                if (!msg.isEmpty())
+                {
+                    groupMessage_ = selectedGroup + " " + msg;
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }

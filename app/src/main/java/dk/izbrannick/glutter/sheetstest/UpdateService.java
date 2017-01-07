@@ -93,8 +93,8 @@ public class UpdateService extends IntentService implements Runnable{
 
             // Update Message From Sheets
             try {
-                String selectedGroup = SheetsHandler.getColumnsLastObject(sheetId, selectedGroupForGroupMessageSheetRange).toString();
-                String msg = SheetsHandler.getColumnsLastObject(sheetId, messagesSheetRange).toString();
+                String selectedGroup = SheetsHandler.getColumnsLastObject(sheetId, selectedGroupForGroupMessageSheetRange).toString().replace("[", "").replace("]", "");
+                String msg = SheetsHandler.getColumnsLastObject(sheetId, messagesSheetRange).toString().replace("[", "").replace("]", "");
                 if (!msg.isEmpty())
                 {
                     groupMessage_ = selectedGroup + " " + msg;

@@ -8,8 +8,11 @@ import java.util.ArrayList;
 
 import dk.izbrannick.glutter.sheetstest.API.SheetsHandler;
 
-import static dk.izbrannick.glutter.sheetstest.StaticDB.*;
-import static dk.izbrannick.glutter.sheetstest.UpdateService.getCurrentTimeStamp;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.currSenderNumber_;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.groupMessage_;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.messageLOGSheetRange;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.messagesSheetRange;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.sheetId;
 
 /**
  * Created by u321424 on 07-11-2016.
@@ -54,9 +57,19 @@ public class SmsHandler {
                 Log.d("Exception", e.getMessage());
             }
 
-
+            // ------ APPEND
             try {
-                SheetsHandler.appendValue(sheetId, "messages!A1:A", groupMessage_);
+                SheetsHandler.appendValue(sheetId, messageLOGSheetRange, groupMessage_);
+            } catch (IndexOutOfBoundsException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            // ------ DELETE
+            try {
+                // -------- Delete message
+                SheetsHandler.deleteValue(sheetId, messagesSheetRange, "");
             } catch (IndexOutOfBoundsException e) {
                 e.printStackTrace();
             } catch (Exception e) {

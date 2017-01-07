@@ -481,7 +481,8 @@ public class MainActivity extends Activity
                 mOutputText.setText(TextUtils.join("\n", output));
 
                 startService(mServiceIntent);
-                uiUpdateThread.start();
+                // TODO: Update UI couses crashes, TO FIX....
+                //uiUpdateThread.start();
             }
         }
 

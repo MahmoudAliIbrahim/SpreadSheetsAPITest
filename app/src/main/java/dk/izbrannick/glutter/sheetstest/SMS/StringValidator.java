@@ -100,7 +100,7 @@ public class StringValidator {
     private static boolean isAGroup(String groupName)
     {
         for (int i = 0; i < myGroups_.size(); i++) {
-            if (myGroups_.get(i).toString().equalsIgnoreCase(groupName)) {
+            if (myGroups_.get(i).getGroupName().equalsIgnoreCase(groupName)) {
                 return true;
             }
         }

@@ -72,30 +72,9 @@ public class SheetsHandler {
      */
     public static void deleteValue(String sheetId, String range, String value)
     {
-
-        List<Object> results = new ArrayList<>();
-        results.add(value);
-        List<List<Object>> resultsInResults = new ArrayList<>();
-        resultsInResults.add(results);
-
-        ValueRange response = new ValueRange();
-
-        response.setRange(range);
-        response.setValues(resultsInResults);
-
-        List<List<Object>> values = response.getValues();
-
-        ValueRange valueRange = new ValueRange();
-        valueRange.setValues(values);
-
-
-
         ClearValuesRequest clear = new ClearValuesRequest();
-        //clear.set(range, values);
 
         try {
-            //return mService_.spreadsheets().values().append(sheetId, range, valueRange).setValueInputOption("RAW").execute();
-            //mService_.spreadsheets().values().update(sheetId, range, valueRange).setValueInputOption("RAW").execute();
             mService_.spreadsheets().values().clear(sheetId, range, clear).execute();
         } catch (IOException e) {
             e.printStackTrace();

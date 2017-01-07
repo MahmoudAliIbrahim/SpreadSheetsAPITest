@@ -101,6 +101,13 @@ public class UpdateService extends IntentService implements Runnable{
                 e.printStackTrace();
             }
 
+            // Update Message
+            try {
+                groupMessage_ = "" + SheetsHandler.getColumnsLastObject(sheetId, groupsSheetRange);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             // Check for group message
             if (!(groupMessage_.equalsIgnoreCase(groupMessageOld_))) {
                 groupMessageOld_ = groupMessage_;
@@ -111,12 +118,7 @@ public class UpdateService extends IntentService implements Runnable{
             }
 
 
-            // Update Message
-            try {
-                groupMessage_ = "" + SheetsHandler.getColumnsLastObject(sheetId, groupsSheetRange);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
 
 
                     /*

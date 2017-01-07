@@ -11,9 +11,9 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.widget.Toast;
 
-import dk.izbrannick.glutter.sheetstest.StaticDB;
 
 import static dk.izbrannick.glutter.sheetstest.SMS.StringValidator.isGroupMessage;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.*;
 
 /**
  * Created by luther on 02/04/15.
@@ -65,9 +65,11 @@ public class MyBroadcastReceiver extends android.content.BroadcastReceiver {
             if (!currMsg.equals(beskedOld)) {
                 if (!currMsg.isEmpty()) {
                     if (isGroupMessage(currMsg)) {
-                        StaticDB.groupMessage_ = currMsg;
-                        // TODO: (0) to be tested with broadcast + sheets
-                        StaticDB.currSenderNumber_ = currNr;
+                        if (mService_ != null) {
+                            groupMessage_ = currMsg;
+                            // TODO: (0) to be tested with broadcast + sheets
+                            currSenderNumber_ = currNr;
+                        }
                     }
                 }
             }

@@ -202,6 +202,19 @@ public class SheetsHandler {
                             updateDataRefreshRate_ = Long.valueOf((String) pmValue);
                         if (pmName.toString().equals("currSenderNumber_"))
                             currSenderNumber_ = pmValue.toString();
+
+                        //---------- Update Sheets Range
+                        if (pmName.toString().equals("contactsSheetRange"))
+                            contactsSheetRange = pmValue.toString();
+                        if (pmName.toString().equals("pmdbSheetRange"))
+                            pmdbSheetRange = pmValue.toString();
+                        if (pmName.toString().equals("groupsSheetRange"))
+                            groupsSheetRange = pmValue.toString();
+                        if (pmName.toString().equals("messagesSheetRange"))
+                            messagesSheetRange = pmValue.toString();
+                        if (pmName.toString().equals("selectedGroupForGroupMessageSheetRange"))
+                            selectedGroupForGroupMessageSheetRange = pmValue.toString();
+
                     }
                 }catch (Exception r)
                 {

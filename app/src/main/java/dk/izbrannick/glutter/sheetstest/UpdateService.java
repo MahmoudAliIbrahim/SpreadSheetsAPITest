@@ -112,19 +112,6 @@ public class UpdateService extends IntentService implements Runnable{
                 }
             }
 
-
-
-
-
-                    /*
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            // update here!
-
-                        }
-                    });
-                    */
             try {
                 Thread.sleep(updateDataRefreshRate_);
             } catch (InterruptedException e) {

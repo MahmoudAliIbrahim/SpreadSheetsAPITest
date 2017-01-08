@@ -25,7 +25,9 @@ import static dk.izbrannick.glutter.sheetstest.StaticDB.mService_;
 import static dk.izbrannick.glutter.sheetstest.StaticDB.messageLOGSheetRange;
 import static dk.izbrannick.glutter.sheetstest.StaticDB.messagesSheetRange;
 import static dk.izbrannick.glutter.sheetstest.StaticDB.pmdbSheetRange;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.resign;
 import static dk.izbrannick.glutter.sheetstest.StaticDB.selectedGroupForGroupMessageSheetRange;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.signup;
 import static dk.izbrannick.glutter.sheetstest.StaticDB.updateDataRefreshRate_;
 import static dk.izbrannick.glutter.sheetstest.StaticDB.updateUIRefreshRate_;
 
@@ -233,8 +235,6 @@ public class SheetsHandler {
                             updateUIRefreshRate_ = Long.valueOf((String) pmValue);
                         if (pmName.toString().equals("updateDataRefreshRate_"))
                             updateDataRefreshRate_ = Long.valueOf((String) pmValue);
-                        if (pmName.toString().equals("currSenderNumber_"))
-                            currSenderNumber_ = pmValue.toString();
 
                         //---------- Update Sheets Range
                         if (pmName.toString().equals("contactsSheetRange"))
@@ -249,6 +249,12 @@ public class SheetsHandler {
                             selectedGroupForGroupMessageSheetRange = pmValue.toString();
                         if (pmName.toString().equals("messageLOGSheetRange"))
                             messageLOGSheetRange = pmValue.toString();
+
+                        //---------- Update Sms API
+                        if (pmName.toString().equals("signup"))
+                            signup = pmValue.toString();
+                        if (pmName.toString().equals("resign"))
+                            resign = pmValue.toString();
 
                     }
                 }catch (Exception r)

@@ -28,4 +28,7 @@ public class StaticDB {
     public static String messagesSheetRange = "SendMessage!B2:B2";
     public static String selectedGroupForGroupMessageSheetRange = "SendMessage!A2:A";
     public static String messageLOGSheetRange = "MessageLOG!A1:A";
+    public static String signup = "Tilmeld";
+    public static String resign = "Afmeld";
+
 }

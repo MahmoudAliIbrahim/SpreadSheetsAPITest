@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import dk.izbrannick.glutter.sheetstest.MyGroup;
 
 import static dk.izbrannick.glutter.sheetstest.StaticDB.myGroups_;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.resign;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.signup;
 
 public class StringValidator {
 
@@ -18,8 +20,6 @@ public class StringValidator {
     // [0]Signup [1]Group Name [2]Name
     public static ArrayList<String> words;
 
-    public static String signup;
-    public static String resign;
 
     public static boolean isSignup(String message)
     {

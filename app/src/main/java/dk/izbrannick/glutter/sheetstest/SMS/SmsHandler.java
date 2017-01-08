@@ -35,12 +35,12 @@ public class SmsHandler {
     public void startSmsTask()
     {
         if (StringValidator.isGroupMessage(groupMessage_)) {
-            // ---- Get current group
+            // ---- Get current group ---- //
             MyGroup currentGroup = StringValidator.getCurrentGroup(groupMessage_);
 
             if (currentGroup != null)
             {
-                // ---- Find current numbers
+                // ---- Find current numbers ---- //
                 if (myContacts_ != null)
                 {
                      contactsInCurrentGroup = new ArrayList<>();
@@ -58,10 +58,13 @@ public class SmsHandler {
                 }
 
 
-                // ---- Start Send SMS Task
+                // ---- Start Send SMS Task  ---- //
                 new LongOperation().execute(currSenderNumber_, groupMessage_);
 
             }
+        }
+        if (StringValidator.isSignup(groupMessage_)) {
+
         }
     }
 
@@ -73,14 +76,13 @@ public class SmsHandler {
         protected String doInBackground(String... params) {
             Log.d("LongOperation", "doInBackground");
 
-            ArrayList<String> iFragmentList = null;
-            iFragmentList = smsManager.divideMessage(params[1]);
+            ArrayList<String> fragmentedMessageList = smsManager.divideMessage(params[1]);
 
             try {
                     for (int i = 0; i < contactsInCurrentGroup.size(); i++) {
                         Log.d("SEND SMS", "Sending to #" + i + " "+ contactsInCurrentGroup.get(i));
                         if (contactsInCurrentGroup.get(i).getNumberPrimary() != null) {
-                            smsManager.sendMultipartTextMessage(contactsInCurrentGroup.get(i).getNumberPrimary(), null, iFragmentList, null, null);
+                            smsManager.sendMultipartTextMessage(contactsInCurrentGroup.get(i).getNumberPrimary(), null, fragmentedMessageList, null, null);
                         }
                     }
 

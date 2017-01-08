@@ -8,6 +8,8 @@ package dk.izbrannick.glutter.sheetstest.SMS;
 
 import java.util.ArrayList;
 
+import dk.izbrannick.glutter.sheetstest.MyGroup;
+
 import static dk.izbrannick.glutter.sheetstest.StaticDB.myGroups_;
 
 public class StringValidator {
@@ -58,7 +60,7 @@ public class StringValidator {
         return false;
     }
 
-    public static boolean isGroupMessage(String message)
+        public static boolean isGroupMessage(String message)
     {
         words = null;
         if (!message.isEmpty()) {
@@ -105,5 +107,16 @@ public class StringValidator {
             }
         }
         return false;
+    }
+
+    public static MyGroup getCurrentGroup(String message_) {
+        for (int i = 0; i < myGroups_.size(); i++) {
+            if (message_.startsWith(myGroups_.get(i).getGroupName())) {
+                MyGroup mGroup = myGroups_.get(i);
+                String grName = mGroup.getGroupName();
+                return mGroup;
+            }
+        }
+        return null;
     }
 }

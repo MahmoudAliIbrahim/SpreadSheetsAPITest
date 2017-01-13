@@ -3,6 +3,7 @@ package dk.izbrannick.glutter.sheetstest.API;
 
 import com.google.api.services.sheets.v4.model.AppendValuesResponse;
 import com.google.api.services.sheets.v4.model.ClearValuesRequest;
+import com.google.api.services.sheets.v4.model.UpdateValuesResponse;
 import com.google.api.services.sheets.v4.model.ValueRange;
 
 import java.io.IOException;
@@ -110,7 +111,33 @@ public class SheetsHandler {
         return null;
     }
 
+    /**
+     * Array list of values are added next incrementing to column, example:
+     * | value1 || timestamp || other value || etc. value || and so on value ||
+     * @return AppendValuesResponse - List of Append Values
+     */
+    public static UpdateValuesResponse updateValues(String sheetId, String range, ArrayList<Object> valueList)
+    {
+        List<List<Object>> resultsInResults = new ArrayList<>();
+        resultsInResults.add(valueList);
 
+        ValueRange response = new ValueRange();
+
+        response.setRange(range);
+        response.setValues(resultsInResults);
+
+        List<List<Object>> values = response.getValues();
+
+        ValueRange valueRange = new ValueRange();
+        valueRange.setValues(values);
+        try {
+            //return mService_.spreadsheets().values().append(sheetId, range, valueRange).setValueInputOption("RAW").execute();
+            return mService_.spreadsheets().values().update(sheetId, range, valueRange).setValueInputOption("RAW").execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     /**
      * Fetch a list of names and majors of students in a sample spreadsheet:
@@ -291,5 +318,77 @@ public class SheetsHandler {
             }
         }
         return myGroups;
+    }
+
+    public static UpdateValuesResponse updateFieldWithParticularNumber(String sheetId, String range, ArrayList<Object> valueList, String number)
+    {
+        int position = -3;
+        try {
+            position = getNumberRangePosition(sheetId, range, number) + 2;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        List<List<Object>> resultsInResults = new ArrayList<>();
+        resultsInResults.add(valueList);
+
+        ValueRange response = null;
+        try {
+            response = mService_.spreadsheets().values().get(sheetId, range).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        response.setRange(range);
+        response.setValues(resultsInResults);
+
+        List<List<Object>> values = response.getValues();
+
+        ValueRange valueRange = new ValueRange();
+        valueRange.setValues(values);
+
+        // -- Update Range ( Contact!A2:H )
+        String[] words = range.split("!"); // "Contact!" + "A2:H"
+        if (words.length > 0) {
+            words[1] = words[1].replaceFirst("\\d+.*", String.valueOf(position)) + ":" + words[1].substring(words[1].length() -1);
+
+            range = words[0] + "!" + words[1];
+            try {
+                //return mService_.spreadsheets().values().append(sheetId, range, valueRange).setValueInputOption("RAW").execute();
+                return mService_.spreadsheets().values().update(sheetId, range, valueRange).setValueInputOption("RAW").execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    /**
+     *
+     * @param spreadSheetId
+     * @param range
+     * @param number
+     * @return -1 for Exception errer and -2 for not found
+     * @throws IOException
+     */
+    public static int getNumberRangePosition(String spreadSheetId, String range, String number) throws IOException
+    {
+        ValueRange response = mService_.spreadsheets().values().get(spreadSheetId, range).execute();
+        List<List<Object>> values = response.getValues();
+        if (values != null) {
+            for (int i = 0; i < values.size(); i++) {
+                List row = values.get(i);
+                try {
+                    String tempNumber = row.get(1).toString();
+                    if (number.equals(tempNumber)) {
+                        return i;
+                    }
+                } catch (Exception r) {
+                    r.printStackTrace();
+                    return -1;
+                }
+            }
+        }
+        return -2;
     }
 }

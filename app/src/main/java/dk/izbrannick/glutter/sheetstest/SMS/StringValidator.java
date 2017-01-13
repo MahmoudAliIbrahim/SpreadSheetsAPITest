@@ -13,14 +13,19 @@ import dk.izbrannick.glutter.sheetstest.MyGroup;
 import static dk.izbrannick.glutter.sheetstest.StaticDB.myGroups_;
 import static dk.izbrannick.glutter.sheetstest.StaticDB.resign;
 import static dk.izbrannick.glutter.sheetstest.StaticDB.signup;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.words;
 
 public class StringValidator {
 
     // checks if message contains requested signup fraze
-    // [0]Signup [1]Group Name [2]Name
-    public static ArrayList<String> words;
 
 
+    /**
+     * Return if true / false and updates current group name
+     * [0]Signup [1]Group Name [2]Name
+     * @param message
+     * @return
+     */
     public static boolean isSignup(String message)
     {
         words = null;
@@ -48,7 +53,7 @@ public class StringValidator {
             String[] splitedMessage = message.split(" ");
             if (splitedMessage.length > 1) {
                 if (splitedMessage[0].equalsIgnoreCase(resign)) {
-                    words = new ArrayList<String>();
+                    words = new ArrayList<>();
                     for (int i = 0; i < splitedMessage.length; i++)
                     {
                         words.add(splitedMessage[i]);
@@ -101,20 +106,24 @@ public class StringValidator {
 
     private static boolean isAGroup(String groupName)
     {
-        for (int i = 0; i < myGroups_.size(); i++) {
-            if (myGroups_.get(i).getGroupName().equalsIgnoreCase(groupName)) {
-                return true;
+        if (myGroups_ != null) {
+            for (int i = 0; i < myGroups_.size(); i++) {
+                if (myGroups_.get(i).getGroupName().equalsIgnoreCase(groupName)) {
+                    return true;
+                }
             }
         }
         return false;
     }
 
     public static MyGroup getCurrentGroup(String message_) {
-        for (int i = 0; i < myGroups_.size(); i++) {
-            if (message_.startsWith(myGroups_.get(i).getGroupName())) {
-                MyGroup mGroup = myGroups_.get(i);
-                String grName = mGroup.getGroupName();
-                return mGroup;
+        if (myGroups_ != null) {
+            for (int i = 0; i < myGroups_.size(); i++) {
+                if (message_.startsWith(myGroups_.get(i).getGroupName())) {
+                    MyGroup mGroup = myGroups_.get(i);
+                    String grName = mGroup.getGroupName();
+                    return mGroup;
+                }
             }
         }
         return null;

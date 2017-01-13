@@ -1,5 +1,6 @@
 package dk.izbrannick.glutter.sheetstest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,5 +31,6 @@ public class StaticDB {
     public static String messageLOGSheetRange = "MessageLOG!A1:A";
     public static String signup = "Tilmeld";
     public static String resign = "Afmeld";
+    public static ArrayList<String> words; /// [0]Signup [1]Group Name [2]Name
 
 }

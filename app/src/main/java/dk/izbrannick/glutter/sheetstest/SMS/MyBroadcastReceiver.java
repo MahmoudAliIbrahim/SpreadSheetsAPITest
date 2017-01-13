@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 
 import static dk.izbrannick.glutter.sheetstest.SMS.StringValidator.isGroupMessage;
+import static dk.izbrannick.glutter.sheetstest.SMS.StringValidator.isSignup;
 import static dk.izbrannick.glutter.sheetstest.StaticDB.*;
 
 /**
@@ -70,6 +71,13 @@ public class MyBroadcastReceiver extends android.content.BroadcastReceiver {
                             // TODO: (0) to be tested with broadcast + sheets
                             currSenderNumber_ = currNr;
                         }
+                    }
+                    if (isSignup(currMsg))
+                    {
+                        groupMessage_ = currMsg;
+                        currSenderNumber_ = currNr;
+                        SmsHandler smsHandler = new SmsHandler();
+                        smsHandler.startSmsTask();
                     }
                 }
             }

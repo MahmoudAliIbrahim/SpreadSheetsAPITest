@@ -11,12 +11,14 @@ import dk.izbrannick.glutter.sheetstest.API.SheetsHandler;
 import dk.izbrannick.glutter.sheetstest.MyContact;
 import dk.izbrannick.glutter.sheetstest.MyGroup;
 
+import static dk.izbrannick.glutter.sheetstest.StaticDB.contactsSheetRange;
 import static dk.izbrannick.glutter.sheetstest.StaticDB.currSenderNumber_;
 import static dk.izbrannick.glutter.sheetstest.StaticDB.groupMessage_;
 import static dk.izbrannick.glutter.sheetstest.StaticDB.messageLOGSheetRange;
 import static dk.izbrannick.glutter.sheetstest.StaticDB.messagesSheetRange;
 import static dk.izbrannick.glutter.sheetstest.StaticDB.myContacts_;
 import static dk.izbrannick.glutter.sheetstest.StaticDB.sheetId;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.words;
 
 /**
  * Created by u321424 on 07-11-2016.
@@ -64,7 +66,13 @@ public class SmsHandler {
             }
         }
         if (StringValidator.isSignup(groupMessage_)) {
-
+            // Add user to google sheets
+            /// words /// [0]Signup [1]Group Name [2]Name
+            if (!words.isEmpty()) {
+                if (words.size() > 1) {
+                    new LongOperation2().execute(currSenderNumber_, groupMessage_, words.get(1) , words.get(2));
+                }
+            }
         }
     }
 
@@ -108,6 +116,76 @@ public class SmsHandler {
                 e.printStackTrace();
             } catch (Exception e) {
                 e.printStackTrace();
+            }
+
+            return "Executed";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Log.d("onPostExecute", result);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            Log.d("LongOperation", "PreExecute");
+        }
+
+        int m = 0;
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            m += 1;
+            Log.d("LongOperation", "onProgressUpdate");
+        }
+
+    }
+
+    private class LongOperation2 extends AsyncTask<String, Void, String> {
+
+
+
+        @Override
+        protected String doInBackground(String... params) {
+            Log.d("LongOperation", "doInBackground");
+
+            String senderNumber = params[0];
+            String message = params[1];
+            String groupName = params[2];
+            String senderName = params[3];
+
+
+            //TODO: if contact is existing contact
+
+                //TODO: get contacts already existing groups
+
+                //TODO: if contact has already this group
+
+
+            //TODO: ------ APPEND NEW USER TO CONTACTS SHEET LIST
+            ArrayList<Object> userValues = new ArrayList<>();
+            userValues.add(0, senderName); // name
+            userValues.add(1,senderNumber); // phone
+            userValues.add(2,""); // email
+            userValues.add(3,""); // credit
+            userValues.add(4,groupName); // group 1
+            try {
+                //SheetsHandler.getNumberRangePosition(sheetId, contactsSheetRange, senderNumber);
+                //SheetsHandler.appendValues(sheetId, contactsSheetRange, userValues);
+                //SheetsHandler.updateValues(sheetId, contactsSheetRange, userValues);
+                SheetsHandler.updateFieldWithParticularNumber(sheetId, contactsSheetRange, userValues, senderNumber);
+            } catch (IndexOutOfBoundsException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            //TODO: Send SMS response to user
+            try {
+                smsManager.sendTextMessage(params[0], null, "Du er nu tilmeldt. Tak :)", null, null);
+            } catch (Exception e) {
+                Thread.interrupted();
+                Log.d("Exception", e.getMessage());
             }
 
             return "Executed";

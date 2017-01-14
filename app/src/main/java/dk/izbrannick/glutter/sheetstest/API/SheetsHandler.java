@@ -104,7 +104,7 @@ public class SheetsHandler {
         ValueRange valueRange = new ValueRange();
         valueRange.setValues(values);
         try {
-            return mService_.spreadsheets().values().append(sheetId, range, valueRange).setValueInputOption("RAW").execute();
+            return mService_.spreadsheets().values().append(sheetId, range, valueRange).setValueInputOption("USER_ENTERED").execute();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -322,45 +322,49 @@ public class SheetsHandler {
 
     public static UpdateValuesResponse updateFieldWithParticularNumber(String sheetId, String range, ArrayList<Object> valueList, String number)
     {
+        UpdateValuesResponse returnValue = null;
         int position = -3;
         try {
-            position = getNumberRangePosition(sheetId, range, number) + 2;
+            position = getNumberRangePosition(sheetId, range, number);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        List<List<Object>> resultsInResults = new ArrayList<>();
-        resultsInResults.add(valueList);
+        if (position > 0) {
+            position +=2;
+            List<List<Object>> resultsInResults = new ArrayList<>();
+            resultsInResults.add(valueList);
 
-        ValueRange response = null;
-        try {
-            response = mService_.spreadsheets().values().get(sheetId, range).execute();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        response.setRange(range);
-        response.setValues(resultsInResults);
-
-        List<List<Object>> values = response.getValues();
-
-        ValueRange valueRange = new ValueRange();
-        valueRange.setValues(values);
-
-        // -- Update Range ( Contact!A2:H )
-        String[] words = range.split("!"); // "Contact!" + "A2:H"
-        if (words.length > 0) {
-            words[1] = words[1].replaceFirst("\\d+.*", String.valueOf(position)) + ":" + words[1].substring(words[1].length() -1);
-
-            range = words[0] + "!" + words[1];
+            ValueRange response = null;
             try {
-                //return mService_.spreadsheets().values().append(sheetId, range, valueRange).setValueInputOption("RAW").execute();
-                return mService_.spreadsheets().values().update(sheetId, range, valueRange).setValueInputOption("RAW").execute();
+                response = mService_.spreadsheets().values().get(sheetId, range).execute();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            response.setRange(range);
+            response.setValues(resultsInResults);
+
+            List<List<Object>> values = response.getValues();
+
+            ValueRange valueRange = new ValueRange();
+            valueRange.setValues(values);
+
+            // -- Update Range ( Contact!A2:H )
+            String[] words = range.split("!"); // "Contact!" + "A2:H"
+            if (words.length > 0) {
+                words[1] = words[1].replaceFirst("\\d+.*", String.valueOf(position)) + ":" + words[1].substring(words[1].length() - 1);
+
+                range = words[0] + "!" + words[1];
+                try {
+                    //return mService_.spreadsheets().values().append(sheetId, range, valueRange).setValueInputOption("RAW").execute();
+                    returnValue = mService_.spreadsheets().values().update(sheetId, range, valueRange).setValueInputOption("USER_ENTERED").execute();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-        return null;
+        return returnValue;
     }
 
     /**
@@ -368,7 +372,7 @@ public class SheetsHandler {
      * @param spreadSheetId
      * @param range
      * @param number
-     * @return -1 for Exception errer and -2 for not found
+     * @return -1 for Exception errer and -2 for not found/new number
      * @throws IOException
      */
     public static int getNumberRangePosition(String spreadSheetId, String range, String number) throws IOException
@@ -379,9 +383,21 @@ public class SheetsHandler {
             for (int i = 0; i < values.size(); i++) {
                 List row = values.get(i);
                 try {
-                    String tempNumber = row.get(1).toString();
-                    if (number.equals(tempNumber)) {
-                        return i;
+                    Object o = null;
+                    String tempNumber;
+                    try {
+                        o = row.get(1);
+                    }catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                    if (o != null) {
+                        tempNumber = o.toString();
+                        if (number != null) {
+                            if (number.equals(tempNumber)) {
+                                return i;
+                            }
+                        }
                     }
                 } catch (Exception r) {
                     r.printStackTrace();

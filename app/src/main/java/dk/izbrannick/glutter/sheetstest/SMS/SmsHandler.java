@@ -4,6 +4,8 @@ import android.os.AsyncTask;
 import android.telephony.SmsManager;
 import android.util.Log;
 
+import com.google.api.services.sheets.v4.model.UpdateValuesResponse;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -173,7 +175,11 @@ public class SmsHandler {
                 //SheetsHandler.getNumberRangePosition(sheetId, contactsSheetRange, senderNumber);
                 //SheetsHandler.appendValues(sheetId, contactsSheetRange, userValues);
                 //SheetsHandler.updateValues(sheetId, contactsSheetRange, userValues);
-                SheetsHandler.updateFieldWithParticularNumber(sheetId, contactsSheetRange, userValues, senderNumber);
+                UpdateValuesResponse updateValuesResponse = SheetsHandler.updateFieldWithParticularNumber(sheetId, contactsSheetRange, userValues, senderNumber);
+                if (updateValuesResponse == null)
+                {
+                    SheetsHandler.appendValues(sheetId, contactsSheetRange, userValues);
+                }
             } catch (IndexOutOfBoundsException e) {
                 e.printStackTrace();
             } catch (Exception e) {

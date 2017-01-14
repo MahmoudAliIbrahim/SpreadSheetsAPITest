@@ -2,6 +2,8 @@ package dk.izbrannick.glutter.sheetstest;
 
 import java.util.ArrayList;
 
+import static dk.izbrannick.glutter.sheetstest.StaticDB.myContacts_;
+
 /**
  * Created by luther on 03/11/2016.
  */
@@ -10,11 +12,13 @@ public class MyContact {
     private String name, numberPrimary, email, credit;
     private ArrayList<Object> groups;
 
+    public MyContact() {}
+
     public MyContact(Object name, Object numberPrimary, Object email, Object credit, ArrayList<Object> groups) {
 
         this.setName(String.valueOf(name));
         this.setNumberPrimary(String.valueOf(numberPrimary));
-        this.setNumberOther(String.valueOf(email));
+        this.setMail(String.valueOf(email));
 
         this.setCredit(String.valueOf(credit));
 
@@ -40,12 +44,12 @@ public class MyContact {
         this.numberPrimary = numberPrimary;
     }
 
-    public String getNumberOther() {
+    public String getMail() {
         return email;
     }
 
-    public void setNumberOther(String numberOther) {
-        this.email = numberOther;
+    public void setMail(String mail) {
+        this.email = mail;
     }
 
 
@@ -65,6 +69,27 @@ public class MyContact {
         //TODO: find out if this is needed
         this.groups = new ArrayList<>();
         this.groups = groups;
+    }
+
+    /**
+     * Returns particular Contacts groups by number
+     * @param numberPrimary
+     * @return
+     */
+    public  MyContact getContatByNumber( String numberPrimary )
+    {
+        if (myContacts_ != null) {
+            for (int i = 0; i < myContacts_.size(); i++) {
+                MyContact contact = myContacts_.get(i);
+                if (contact != null) {
+                    String contactsNumber = contact.getNumberPrimary();
+                    if (contactsNumber.equalsIgnoreCase(numberPrimary)) {
+                        return contact;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     @Override

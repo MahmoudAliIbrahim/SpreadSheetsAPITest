@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.google.api.services.sheets.v4.model.UpdateValuesResponse;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -158,34 +159,61 @@ public class SmsHandler {
 
 
             //TODO: if contact is existing contact
-
-                //TODO: get contacts already existing groups
-
-                //TODO: if contact has already this group
-
-
-            //TODO: ------ APPEND NEW USER TO CONTACTS SHEET LIST
-            ArrayList<Object> userValues = new ArrayList<>();
-            userValues.add(0, senderName); // name
-            userValues.add(1,senderNumber); // phone
-            userValues.add(2,""); // email
-            userValues.add(3,""); // credit
-            userValues.add(4,groupName); // group 1
+            int position = -3;
             try {
-                //SheetsHandler.getNumberRangePosition(sheetId, contactsSheetRange, senderNumber);
-                //SheetsHandler.appendValues(sheetId, contactsSheetRange, userValues);
-                //SheetsHandler.updateValues(sheetId, contactsSheetRange, userValues);
-                UpdateValuesResponse updateValuesResponse = SheetsHandler.updateFieldWithParticularNumber(sheetId, contactsSheetRange, userValues, senderNumber);
-                if (updateValuesResponse == null)
-                {
-                    SheetsHandler.appendValues(sheetId, contactsSheetRange, userValues);
-                }
-            } catch (IndexOutOfBoundsException e) {
-                e.printStackTrace();
-            } catch (Exception e) {
+                position = SheetsHandler.getNumberRangePosition(sheetId, contactsSheetRange, senderNumber);
+            } catch (IOException e) {
                 e.printStackTrace();
             }
+            // --- Number is already exists
+            if (position > 0) {
+                //TODO: get contacts already existing groups
+                MyContact contact = new MyContact();
+                contact = contact.getContatByNumber(senderNumber);
+                if (contact != null) {
 
+                    ArrayList<Object> userValues = new ArrayList<>();
+                    userValues.add(0, contact.getName()); // name
+                    userValues.add(1, contact.getNumberPrimary()); // phone
+                    userValues.add(2, contact.getMail()); // email
+                    userValues.add(3, contact.getCredit()); // credit
+                    int groupPosition = 0;
+                    for (int g = 0; g < contact.getGroups().size(); g++)
+                    {
+                        groupPosition = g+4;
+                        userValues.add(groupPosition,  contact.getGroups().get(g)); // group 1
+                    }
+                    userValues.add(groupPosition, groupName);
+
+                    //TODO: if contact has already this group
+                    try {
+                        UpdateValuesResponse updateValuesResponse = SheetsHandler.updateFieldWithParticularNumber(sheetId, contactsSheetRange, userValues, senderNumber);
+                        if (updateValuesResponse == null) {
+                            //TODO: handle not updated field
+                        }
+                    } catch (IndexOutOfBoundsException e) {
+                        e.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            else {
+                //TODO: ------ APPEND NEW USER TO CONTACTS SHEET LIST
+                ArrayList<Object> userValues = new ArrayList<>();
+                userValues.add(0, senderName); // name
+                userValues.add(1, senderNumber); // phone
+                userValues.add(2, ""); // email
+                userValues.add(3, ""); // credit
+                userValues.add(4, groupName); // group 1
+                try {
+                    SheetsHandler.appendValues(sheetId, contactsSheetRange, userValues);
+                } catch (IndexOutOfBoundsException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             //TODO: Send SMS response to user
             try {
                 smsManager.sendTextMessage(params[0], null, "Du er nu tilmeldt. Tak :)", null, null);

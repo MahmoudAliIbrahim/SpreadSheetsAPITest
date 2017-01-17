@@ -200,6 +200,7 @@ public class MainActivity extends Activity
         } else if (!isDeviceOnline()) {
             mOutputText.setText("No network connection available.");
         } else {
+            isPermissionToGoogleGranted = true;
             new MakeRequestTask(mCredential).execute();
         }
     }
@@ -316,7 +317,7 @@ public class MainActivity extends Activity
      */
     @Override
     public void onPermissionsGranted(int requestCode, List<String> list) {
-// Do nothing.
+        isPermissionToGoogleGranted = true;
     }
 
     /**

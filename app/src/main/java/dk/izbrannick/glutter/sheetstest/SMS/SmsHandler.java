@@ -165,7 +165,7 @@ public class SmsHandler {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            // --- Number is already exists
+            // ---  IF Number already exists
             if (position > 0) {
                 //TODO: get contacts already existing groups
                 MyContact contact = new MyContact();

@@ -19,9 +19,9 @@ public class StaticDB {
     public static String currentTimeStamp_;
     public static boolean enableUpdateUI_ = true;
     public static boolean enableUpdateData_ = true;
-    public static long updateUIRefreshRate_ = 3000; /// synchronizes with sheets - refresh rate
-    public static long updateDataRefreshRate_ = 2000; /// synchronizes with sheets - refresh rate
-    // TODO: (1) to be tested with broadcast + sheets
+    public static boolean isPermissionToGoogleGranted = false;
+    public static long updateUIRefreshRate_ = 3000; /// how often mobile synchronizes with online sheets - refresh rate
+    public static long updateDataRefreshRate_ = 2000; /// how often mobile synchronizes with online sheets - refresh rate
     public static String currSenderNumber_;
     public static String contactsSheetRange = "Contact!A2:H";
     public static String pmdbSheetRange = "pmdb!A2:C99";

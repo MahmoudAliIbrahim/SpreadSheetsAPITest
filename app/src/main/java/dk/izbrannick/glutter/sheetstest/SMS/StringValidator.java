@@ -17,9 +17,7 @@ import static dk.izbrannick.glutter.sheetstest.StaticDB.words;
 
 public class StringValidator {
 
-    // checks if message contains requested signup fraze
-
-
+    // checks if message contains requested signup / resign frazes
     /**
      * Return if true / false and updates current group name
      * [0]Signup [1]Group Name [2]Name
@@ -65,7 +63,7 @@ public class StringValidator {
         return false;
     }
 
-        public static boolean isGroupMessage(String message)
+    public static boolean isGroupMessage(String message)
     {
         words = null;
         if (!message.isEmpty()) {
@@ -116,10 +114,10 @@ public class StringValidator {
         return false;
     }
 
-    public static MyGroup getCurrentGroup(String message_) {
+    public static MyGroup getCurrentGroup(String groupMessage_) {
         if (myGroups_ != null) {
             for (int i = 0; i < myGroups_.size(); i++) {
-                if (message_.startsWith(myGroups_.get(i).getGroupName())) {
+                if (groupMessage_.startsWith(myGroups_.get(i).getGroupName())) {
                     MyGroup mGroup = myGroups_.get(i);
                     String grName = mGroup.getGroupName();
                     return mGroup;

@@ -81,8 +81,6 @@ public class SmsHandler {
 
     private class LongOperation extends AsyncTask<String, Void, String> {
 
-
-
         @Override
         protected String doInBackground(String... params) {
             Log.d("LongOperation", "doInBackground");
@@ -167,52 +165,16 @@ public class SmsHandler {
             }
             // ---  IF Number already exists
             if (position > 0) {
-                //TODO: get contacts already existing groups
+                // ------ get contacts already existing groups
                 MyContact contact = new MyContact();
                 contact = contact.getContatByNumber(senderNumber);
                 if (contact != null) {
-
-                    ArrayList<Object> userValues = new ArrayList<>();
-                    userValues.add(0, contact.getName()); // name
-                    userValues.add(1, contact.getNumberPrimary()); // phone
-                    userValues.add(2, contact.getMail()); // email
-                    userValues.add(3, contact.getCredit()); // credit
-                    int groupPosition = 0;
-                    for (int g = 0; g < contact.getGroups().size(); g++)
-                    {
-                        groupPosition = g+4;
-                        userValues.add(groupPosition,  contact.getGroups().get(g)); // group 1
-                    }
-                    userValues.add(groupPosition, groupName);
-
-                    //TODO: if contact has already this group
-                    try {
-                        UpdateValuesResponse updateValuesResponse = SheetsHandler.updateFieldWithParticularNumber(sheetId, contactsSheetRange, userValues, senderNumber);
-                        if (updateValuesResponse == null) {
-                            //TODO: handle not updated field
-                        }
-                    } catch (IndexOutOfBoundsException e) {
-                        e.printStackTrace();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    SheetsHandler.updateContactInfo(contact, groupName, senderNumber);
                 }
             }
             else {
-                //TODO: ------ APPEND NEW USER TO CONTACTS SHEET LIST
-                ArrayList<Object> userValues = new ArrayList<>();
-                userValues.add(0, senderName); // name
-                userValues.add(1, senderNumber); // phone
-                userValues.add(2, ""); // email
-                userValues.add(3, ""); // credit
-                userValues.add(4, groupName); // group 1
-                try {
-                    SheetsHandler.appendValues(sheetId, contactsSheetRange, userValues);
-                } catch (IndexOutOfBoundsException e) {
-                    e.printStackTrace();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                // ------ APPEND NEW USER TO CONTACTS SHEET LIST
+                SheetsHandler.addNewContact(groupName, senderNumber, senderName);
             }
             //TODO: Send SMS response to user
             try {

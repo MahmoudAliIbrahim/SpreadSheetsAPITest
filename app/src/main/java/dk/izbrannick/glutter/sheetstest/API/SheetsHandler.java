@@ -28,6 +28,7 @@ import static dk.izbrannick.glutter.sheetstest.StaticDB.messagesSheetRange;
 import static dk.izbrannick.glutter.sheetstest.StaticDB.pmdbSheetRange;
 import static dk.izbrannick.glutter.sheetstest.StaticDB.resign;
 import static dk.izbrannick.glutter.sheetstest.StaticDB.selectedGroupForGroupMessageSheetRange;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.sheetId;
 import static dk.izbrannick.glutter.sheetstest.StaticDB.signup;
 import static dk.izbrannick.glutter.sheetstest.StaticDB.updateDataRefreshRate_;
 import static dk.izbrannick.glutter.sheetstest.StaticDB.updateUIRefreshRate_;
@@ -407,4 +408,104 @@ public class SheetsHandler {
         }
         return -2;
     }
+
+    public static boolean updateContactInfo(MyContact contact, String groupName, String senderNumber)
+    {
+        boolean returnValue = false;
+        ArrayList<Object> userValues = new ArrayList<>();
+        userValues.add(0, contact.getName()); // name
+        userValues.add(1, contact.getNumberPrimary()); // phone
+        userValues.add(2, contact.getMail()); // email
+        userValues.add(3, contact.getCredit()); // credit
+        int groupPosition = 0;
+        for (int g = 0; g < contact.getGroups().size(); g++)
+        {
+            groupPosition = g+4;
+            userValues.add(groupPosition, contact.getGroups().get(g)); // group 1
+        }
+        userValues.add(groupPosition, groupName);
+
+        //TODO: if contact has already this group
+        try {
+            UpdateValuesResponse updateValuesResponse = updateFieldWithParticularNumber(sheetId, contactsSheetRange, userValues, senderNumber);
+            returnValue = true;
+            if (updateValuesResponse == null) {
+                returnValue = false;
+            }
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+            returnValue = false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            returnValue = false;
+        }
+        return returnValue;
+    }
+
+    public static boolean addNewContact(String groupName, String senderNumber, String senderName)
+    {
+        boolean returnValue = false;
+        ArrayList<Object> userValues = new ArrayList<>();
+        userValues.add(0, senderName); // name
+        userValues.add(1, senderNumber); // phone
+        userValues.add(2, ""); // email
+        userValues.add(3, ""); // credit
+        userValues.add(4, groupName); // group 1
+        try {
+            AppendValuesResponse appendValuesResponse = SheetsHandler.appendValues(sheetId, contactsSheetRange, userValues);
+            if (appendValuesResponse == null) {
+                returnValue = false;
+            }
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+            returnValue = false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            returnValue = false;
+        }
+        return returnValue;
+    }
+
+    public static boolean removeContactsGroup(MyContact contact, String groupName, String senderNumber)
+    {
+        boolean returnValue = false;
+        ArrayList<Object> userValues = new ArrayList<>();
+        userValues.add(0, contact.getName()); // name
+        userValues.add(1, contact.getNumberPrimary()); // phone
+        userValues.add(2, contact.getMail()); // email
+        userValues.add(3, contact.getCredit()); // credit
+        int groupPosition = 0;
+
+        int numberOfGroups = contact.getGroups().size();
+
+        if (numberOfGroups > 0) {
+            for (int g = 0; g < numberOfGroups; g++) {
+                groupPosition = g + 4;
+                userValues.add(groupPosition, contact.getGroups().get(g)); // group 1
+            }
+            userValues.add(groupPosition, groupName);
+
+            //TODO: if contact has already this group
+            try {
+                UpdateValuesResponse updateValuesResponse = updateFieldWithParticularNumber(sheetId, contactsSheetRange, userValues, senderNumber);
+                returnValue = true;
+                if (updateValuesResponse == null) {
+                    returnValue = false;
+                }
+            } catch (IndexOutOfBoundsException e) {
+                e.printStackTrace();
+                returnValue = false;
+            } catch (Exception e) {
+                e.printStackTrace();
+                returnValue = false;
+            }
+        }
+        else
+        {
+            // TODO: Delete Contact - remove from list
+        }
+        return returnValue;
+    }
+
 }
+

@@ -474,18 +474,35 @@ public class SheetsHandler {
         userValues.add(1, contact.getNumberPrimary()); // phone
         userValues.add(2, contact.getMail()); // email
         userValues.add(3, contact.getCredit()); // credit
-        int groupPosition = 0;
+
 
         int numberOfGroups = contact.getGroups().size();
 
         if (numberOfGroups > 0) {
+            int groupPosition = 0;
             for (int g = 0; g < numberOfGroups; g++) {
                 groupPosition = g + 4;
-                userValues.add(groupPosition, contact.getGroups().get(g)); // group 1
-            }
-            userValues.add(groupPosition, groupName);
 
-            //TODO: if contact has already this group
+                String currGroup = "ThereIsNoGroupYet01923875id";
+
+                try {
+                    currGroup = contact.getGroups().get(g).toString();
+                }catch (IndexOutOfBoundsException e)
+                {
+                    e.printStackTrace();
+                }
+
+                if (currGroup.equalsIgnoreCase(groupName))
+                {
+                    userValues.add(groupPosition, null);
+                }
+                if (!currGroup.equalsIgnoreCase(groupName))
+                {
+                    userValues.add(groupPosition, currGroup);
+                }
+
+            }
+
             try {
                 UpdateValuesResponse updateValuesResponse = updateFieldWithParticularNumber(sheetId, contactsSheetRange, userValues, senderNumber);
                 returnValue = true;
@@ -500,9 +517,9 @@ public class SheetsHandler {
                 returnValue = false;
             }
         }
-        else
+        if (numberOfGroups < 1)
         {
-            // TODO: Delete Contact - remove from list
+            deleteValue(sheetId, contactsSheetRange);
         }
         return returnValue;
     }

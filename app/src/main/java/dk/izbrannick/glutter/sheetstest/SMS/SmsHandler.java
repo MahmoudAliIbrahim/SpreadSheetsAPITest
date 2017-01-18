@@ -73,7 +73,7 @@ public class SmsHandler {
             /// words /// [0]Signup [1]Group Name [2]Name
             if (!words.isEmpty()) {
                 if (words.size() > 1) {
-                    new LongOperation2().execute(currSenderNumber_, groupMessage_, words.get(1) , words.get(2));
+                    new LongOperationSignup().execute(currSenderNumber_, groupMessage_, words.get(1) , words.get(2));
                 }
             }
         }
@@ -142,7 +142,7 @@ public class SmsHandler {
 
     }
 
-    private class LongOperation2 extends AsyncTask<String, Void, String> {
+    private class LongOperationSignup extends AsyncTask<String, Void, String> {
 
 
 

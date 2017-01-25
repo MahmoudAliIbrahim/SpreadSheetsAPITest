@@ -9,6 +9,7 @@ package dk.izbrannick.glutter.sheetstest.SMS;
 import java.util.ArrayList;
 
 import dk.izbrannick.glutter.sheetstest.MyGroup;
+import dk.izbrannick.glutter.sheetstest.StaticDB;
 
 import static dk.izbrannick.glutter.sheetstest.StaticDB.myGroups_;
 import static dk.izbrannick.glutter.sheetstest.StaticDB.resign;
@@ -16,6 +17,40 @@ import static dk.izbrannick.glutter.sheetstest.StaticDB.signup;
 import static dk.izbrannick.glutter.sheetstest.StaticDB.words;
 
 public class StringValidator {
+
+    /**
+     * Returns true if number is foreign. Updates currSenderNumber_ number in StaticDB
+     * @param number
+     * @return
+     */
+    public static boolean isForeignNumber(String number)
+    {
+        if (number.startsWith("+") && number.startsWith( "+" + StaticDB.currentCountryCode))
+        {
+            StaticDB.currSenderNumber_ = formatNumber(number);
+            return false;
+        }
+        if (number.startsWith("00") && number.startsWith( "00" + StaticDB.currentCountryCode))
+        {
+            StaticDB.currSenderNumber_ = formatNumber(number);
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    private static String formatNumber(String number)
+    {
+        String formattedNumber = "";
+        int length = number.length();
+        if (length > 8)
+        {
+            formattedNumber = number.subSequence(length-8, length).toString();
+        }
+        return formattedNumber;
+    }
 
     // checks if message contains requested signup / resign frazes
     /**

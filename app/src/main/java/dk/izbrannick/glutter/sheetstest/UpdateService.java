@@ -72,7 +72,6 @@ public class UpdateService extends IntentService implements Runnable{
                 e.printStackTrace();
             }
 
-
             // -- Update timestamp
             currentTimeStamp_ = getCurrentTimeStamp();
 

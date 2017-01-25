@@ -16,6 +16,7 @@ import dk.izbrannick.glutter.sheetstest.MyGroup;
 import static dk.izbrannick.glutter.sheetstest.StaticDB.applicationName_;
 import static dk.izbrannick.glutter.sheetstest.StaticDB.contactsSheetRange;
 import static dk.izbrannick.glutter.sheetstest.StaticDB.currSenderNumber_;
+import static dk.izbrannick.glutter.sheetstest.StaticDB.currentCountryCode;
 import static dk.izbrannick.glutter.sheetstest.StaticDB.currentTimeStamp_;
 import static dk.izbrannick.glutter.sheetstest.StaticDB.enableUpdateData_;
 import static dk.izbrannick.glutter.sheetstest.StaticDB.enableUpdateUI_;
@@ -263,6 +264,8 @@ public class SheetsHandler {
                             updateUIRefreshRate_ = Long.valueOf((String) pmValue);
                         if (pmName.toString().equals("updateDataRefreshRate_"))
                             updateDataRefreshRate_ = Long.valueOf((String) pmValue);
+                        if (pmName.toString().equals("currentCountryCode"))
+                            currentCountryCode = pmValue.toString();
 
                         //---------- Update Sheets Range
                         if (pmName.toString().equals("contactsSheetRange"))

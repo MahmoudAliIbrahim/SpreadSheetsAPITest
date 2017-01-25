@@ -32,5 +32,6 @@ public class StaticDB {
     public static String signup = "Tilmeld";
     public static String resign = "Afmeld";
     public static ArrayList<String> words; /// [0]Signup [1]Group Name [2]Name
+    public static String currentCountryCode = "45"; // + // 00
 
 }

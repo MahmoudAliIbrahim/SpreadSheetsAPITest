@@ -39,41 +39,39 @@ public class SmsHandler {
 
     public void startSmsTask()
     {
-        if (StringValidator.isGroupMessage(groupMessage_)) {
-            // ---- Get current group ---- //
-            MyGroup currentGroup = StringValidator.getCurrentGroup(groupMessage_);
+        if (StringValidator.isForeignNumber(currSenderNumber_)) {
+            if (StringValidator.isGroupMessage(groupMessage_)) {
+                // ---- Get current group ---- //
+                MyGroup currentGroup = StringValidator.getCurrentGroup(groupMessage_);
 
-            if (currentGroup != null)
-            {
-                // ---- Find current numbers ---- //
-                if (myContacts_ != null)
-                {
-                     contactsInCurrentGroup = new ArrayList<>();
-                    for (int i = 0; i < myContacts_.size(); i++)
-                    {
-                        MyContact myContact = myContacts_.get(i);
-                        for (int g = 0; g < myContact.getGroups().size(); g++) {
-                            Object myGroup = myContact.getGroups().get(g);
-                            if (myGroup.toString().equals(currentGroup.getGroupName()))
-                            {
-                                contactsInCurrentGroup.add(myContact);
+                if (currentGroup != null) {
+                    // ---- Find current numbers ---- //
+                    if (myContacts_ != null) {
+                        contactsInCurrentGroup = new ArrayList<>();
+                        for (int i = 0; i < myContacts_.size(); i++) {
+                            MyContact myContact = myContacts_.get(i);
+                            for (int g = 0; g < myContact.getGroups().size(); g++) {
+                                Object myGroup = myContact.getGroups().get(g);
+                                if (myGroup.toString().equals(currentGroup.getGroupName())) {
+                                    contactsInCurrentGroup.add(myContact);
+                                }
                             }
                         }
                     }
+
+
+                    // ---- Start Send SMS Task  ---- //
+                    new LongOperation().execute(currSenderNumber_, groupMessage_);
+
                 }
-
-
-                // ---- Start Send SMS Task  ---- //
-                new LongOperation().execute(currSenderNumber_, groupMessage_);
-
             }
-        }
-        if (StringValidator.isSignup(groupMessage_)) {
-            // Add user to google sheets
-            /// words /// [0]Signup [1]Group Name [2]Name
-            if (!words.isEmpty()) {
-                if (words.size() > 1) {
-                    new LongOperationSignup().execute(currSenderNumber_, groupMessage_, words.get(1) , words.get(2));
+            if (StringValidator.isSignup(groupMessage_)) {
+                // Add user to google sheets
+                /// words /// [0]Signup [1]Group Name [2]Name
+                if (!words.isEmpty()) {
+                    if (words.size() > 1) {
+                        new LongOperationSignup().execute(currSenderNumber_, groupMessage_, words.get(1), words.get(2));
+                    }
                 }
             }
         }

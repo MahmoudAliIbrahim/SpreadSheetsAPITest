@@ -469,7 +469,14 @@ public class SheetsHandler {
         return returnValue;
     }
 
-    public static boolean removeContactsGroup(MyContact contact, String groupName, String senderNumber)
+    /**
+     * Removes contacts group if contact participates in one or several groups. Deletes contact from list if contact has no groups left
+     * @param contact
+     * @param groupName
+     * @param senderNumber
+     * @return
+     */
+    public static boolean removeContactsGroupOrDelete(MyContact contact, String groupName, String senderNumber)
     {
         boolean returnValue = false;
         ArrayList<Object> userValues = new ArrayList<>();

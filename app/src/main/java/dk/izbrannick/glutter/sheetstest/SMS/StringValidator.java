@@ -25,20 +25,23 @@ public class StringValidator {
      */
     public static boolean isForeignNumber(String number)
     {
+        boolean b = true;
         if (number.startsWith("+") && number.startsWith( "+" + StaticDB.currentCountryCode))
         {
             StaticDB.currSenderNumber_ = formatNumber(number);
-            return false;
+            b =  false;
         }
         if (number.startsWith("00") && number.startsWith( "00" + StaticDB.currentCountryCode))
         {
             StaticDB.currSenderNumber_ = formatNumber(number);
-            return false;
+            b =  false;
         }
-        else
+        if (number.length() == 8)
         {
-            return true;
+            b = false;
         }
+
+        return b;
     }
 
     private static String formatNumber(String number)

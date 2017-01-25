@@ -3,6 +3,7 @@ package dk.izbrannick.glutter.sheetstest.SMS;
 import android.os.AsyncTask;
 import android.telephony.SmsManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.api.services.sheets.v4.model.UpdateValuesResponse;
 
@@ -39,7 +40,7 @@ public class SmsHandler {
 
     public void startSmsTask()
     {
-        if (StringValidator.isForeignNumber(currSenderNumber_)) {
+        if (!StringValidator.isForeignNumber(currSenderNumber_)) {
             if (StringValidator.isGroupMessage(groupMessage_)) {
                 // ---- Get current group ---- //
                 MyGroup currentGroup = StringValidator.getCurrentGroup(groupMessage_);
@@ -59,9 +60,8 @@ public class SmsHandler {
                         }
                     }
 
-
                     // ---- Start Send SMS Task  ---- //
-                    new LongOperation().execute(currSenderNumber_, groupMessage_);
+                    new LongOperationGroupMSG().execute(currSenderNumber_, groupMessage_);
 
                 }
             }
@@ -74,10 +74,14 @@ public class SmsHandler {
                     }
                 }
             }
+            if (StringValidator.isResign(groupMessage_))
+            {
+
+            }
         }
     }
 
-    private class LongOperation extends AsyncTask<String, Void, String> {
+    private class LongOperationGroupMSG extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... params) {
@@ -177,6 +181,71 @@ public class SmsHandler {
             //TODO: Send SMS response to user
             try {
                 smsManager.sendTextMessage(params[0], null, "Du er nu tilmeldt. Tak :)", null, null);
+            } catch (Exception e) {
+                Thread.interrupted();
+                Log.d("Exception", e.getMessage());
+            }
+
+            return "Executed";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Log.d("onPostExecute", result);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            Log.d("LongOperation", "PreExecute");
+        }
+
+        int m = 0;
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            m += 1;
+            Log.d("LongOperation", "onProgressUpdate");
+        }
+
+    }
+
+    private class LongOperationResign extends AsyncTask<String, Void, String> {
+
+
+
+        @Override
+        protected String doInBackground(String... params) {
+            Log.d("LongOperation", "doInBackground");
+
+            String senderNumber = params[0];
+            String message = params[1];
+            String groupName = params[2];
+            String senderName = params[3];
+
+
+            //TODO: if contact is existing contact
+            int position = -3;
+            try {
+                position = SheetsHandler.getNumberRangePosition(sheetId, contactsSheetRange, senderNumber);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            // ---  IF Number already exists
+            if (position > 0) {
+                // ------ get contacts already existing groups
+                MyContact contact = new MyContact();
+                contact = contact.getContatByNumber(senderNumber);
+                if (contact != null) {
+                    SheetsHandler.removeContactsGroupOrDelete(contact, groupName, senderNumber);
+                }
+            }
+            else {
+                // ------ APPEND NEW USER TO CONTACTS SHEET LIST
+                SheetsHandler.addNewContact(groupName, senderNumber, senderName);
+            }
+            //TODO: Send SMS response to user
+            try {
+                smsManager.sendTextMessage(params[0], null, "Du er nu afmeldt. Tak at du var med i: " + groupName, null, null);
             } catch (Exception e) {
                 Thread.interrupted();
                 Log.d("Exception", e.getMessage());
